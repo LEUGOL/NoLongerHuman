@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,6 +7,7 @@
 <title>NO LONGER HUMAN</title>
 <style>
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   padding: 30px 16px;
@@ -13,7 +15,9 @@ body {
   color: #392e2b;
   font-family: Arial, sans-serif;
 }
+
 .container { max-width: 1100px; margin: auto; }
+
 header {
   background: #542f36;
   color: #fff8ed;
@@ -21,8 +25,10 @@ header {
   border-radius: 14px;
   margin-bottom: 22px;
 }
+
 header h1 { margin: 0 0 8px; letter-spacing: 3px; }
 header p { margin: 0; opacity: .8; }
+
 section {
   background: #fffdf9;
   border: 1px solid #e5d9cc;
@@ -30,24 +36,26 @@ section {
   padding: 22px;
   margin-bottom: 20px;
 }
+
 h2 { color: #663b43; margin-top: 0; }
+
 .cast-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
+
 .cast-card {
   background: #f7f1e9;
   padding: 18px;
   border-radius: 10px;
 }
+
 .cast-card h3 { margin: 0 0 10px; color: #663b43; }
 .cast-card p { margin: 0; line-height: 1.8; }
-.stats {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+
+.stats { display: flex; gap: 12px; flex-wrap: wrap; }
+
 .stat {
   flex: 1;
   min-width: 130px;
@@ -55,7 +63,13 @@ h2 { color: #663b43; margin-top: 0; }
   padding: 16px;
   border-radius: 10px;
 }
-.stat strong { display: block; font-size: 25px; color: #663b43; }
+
+.stat strong {
+  display: block;
+  font-size: 25px;
+  color: #663b43;
+}
+
 button, select, input {
   font: inherit;
   border: 1px solid #d9c9bb;
@@ -64,6 +78,7 @@ button, select, input {
   background: white;
   color: #392e2b;
 }
+
 button {
   background: #663b43;
   color: white;
@@ -71,28 +86,209 @@ button {
   cursor: pointer;
   margin: 4px 3px 4px 0;
 }
+
 button:hover { background: #81545b; }
 button.secondary { background: #8c796e; }
+
 .table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; min-width: 850px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
 th, td {
   padding: 9px 7px;
   border-bottom: 1px solid #eadfd4;
   text-align: center;
 }
+
 th { background: #f3ebe2; color: #663b43; }
 td input, td select { width: 100%; min-width: 90px; }
 td input[type="checkbox"] { width: auto; min-width: auto; }
+
 .delete { background: #a65b56; }
 .actions { margin-bottom: 12px; }
 #actorFilter { margin-bottom: 12px; }
+
+.seat-button {
+  min-width: 105px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.seat-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(30, 20, 20, .65);
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.seat-modal.open {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.seat-window {
+  width: 100%;
+  max-width: 1050px;
+  margin: 20px auto;
+  padding: 22px;
+  background: #fffdf9;
+  border-radius: 14px;
+}
+
+.seat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.seat-top h2 { margin-bottom: 8px; }
+
+.stage {
+  margin: 18px auto 24px;
+  padding: 12px;
+  max-width: 500px;
+  text-align: center;
+  color: white;
+  background: #542f36;
+  border-radius: 5px;
+  letter-spacing: 5px;
+}
+
+.seat-legend {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.legend-square {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #c9b8aa;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 5px;
+  background: #f7f1e9;
+}
+
+.legend-square.selected { background: #663b43; }
+
+.seat-map-scroll {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.seat-map {
+  min-width: 690px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.seat-block {
+  background: #f7f1e9;
+  padding: 12px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.seat-block h3 {
+  text-align: center;
+  margin: 0 0 12px;
+  color: #663b43;
+  font-size: 14px;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 27px;
+  margin: 3px 0;
+}
+
+.row-label {
+  width: 22px;
+  flex-shrink: 0;
+  text-align: center;
+  color: #8c796e;
+  font-size: 10px;
+}
+
+.seat {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #d4c4b7;
+  border-radius: 4px;
+  background: #fffdf9;
+  color: #663b43;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.seat:hover { background: #eadbd0; }
+
+.seat.selected {
+  background: #663b43;
+  border-color: #663b43;
+  color: white;
+  font-weight: bold;
+}
+
+.seat-gap {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.pillar {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border: 1px dashed #b9a89a;
+  border-radius: 3px;
+  background: #e6ddd3;
+}
+
+.seat-bottom {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #eadfd4;
+}
+
+#selectedSeatText {
+  color: #663b43;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
 @media(max-width:600px) {
   body { padding: 14px 9px; }
   header { padding: 24px; }
   section { padding: 15px; }
+  .seat-window { padding: 14px; }
+  .seat-map { justify-content: flex-start; }
 }
 </style>
 </head>
+
 <body>
 <div class="container">
 
@@ -135,6 +331,7 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
 
 <section>
   <h2>PERFORMANCE SCHEDULE</h2>
+
   <div class="actions">
     <button onclick="addRow()">+ 일정 추가</button>
     <button class="secondary" onclick="exportData()">기록 저장</button>
@@ -167,6 +364,53 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
 
 </div>
 
+<!-- 좌석 선택 창 -->
+<div class="seat-modal" id="seatModal">
+  <div class="seat-window">
+    <div class="seat-top">
+      <div>
+        <h2>MY SEAT</h2>
+        <p id="seatPerformance"></p>
+      </div>
+      <button class="secondary" onclick="closeSeatMap()">닫기</button>
+    </div>
+
+    <div class="stage">STAGE</div>
+
+    <div class="seat-legend">
+      <span><span class="legend-square"></span>선택 가능</span>
+      <span><span class="legend-square selected"></span>내 좌석</span>
+      <span><span class="legend-square" style="background:#e6ddd3"></span>기둥</span>
+    </div>
+
+    <div class="seat-map-scroll">
+      <div class="seat-map">
+        <div class="seat-block">
+          <h3>LEFT BLOCK</h3>
+          <div id="leftSeats"></div>
+        </div>
+
+        <div class="seat-block">
+          <h3>CENTER BLOCK</h3>
+          <div id="centerSeats"></div>
+        </div>
+
+        <div class="seat-block">
+          <h3>RIGHT BLOCK</h3>
+          <div id="rightSeats"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seat-bottom">
+      <p>선택한 좌석</p>
+      <div id="selectedSeatText">선택한 좌석이 없습니다.</div>
+      <button onclick="clearSeats()" class="secondary">선택 초기화</button>
+      <button onclick="saveSeats()">좌석 저장</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const cast = {
   dazai: ["안재영", "박정원", "정재환"],
@@ -175,6 +419,7 @@ const cast = {
 };
 
 let records = [];
+
 try {
   records = JSON.parse(localStorage.getItem("nlh_records") || "[]");
   if (!Array.isArray(records)) records = [];
@@ -209,8 +454,16 @@ newSchedule.forEach(item => {
     records.push({
       ...item,
       watched: false,
-      seat: ""
+      seat: "",
+      seatSelections: []
     });
+  }
+});
+
+// 기존 기록에 좌석 선택 정보가 없으면 추가
+records.forEach(r => {
+  if (!Array.isArray(r.seatSelections)) {
+    r.seatSelections = [];
   }
 });
 
@@ -236,8 +489,10 @@ function addRow() {
     ango: "",
     shizuko: "",
     watched: false,
-    seat: ""
+    seat: "",
+    seatSelections: []
   });
+
   save();
   render();
 }
@@ -264,7 +519,13 @@ function render() {
     const actors = [r.dazai, r.ango, r.shizuko];
     if (filter && !actors.includes(filter)) return;
 
+    const seatCount = (r.seatSelections || []).length;
+    const seatLabel = seatCount
+      ? `${seatCount}석 선택`
+      : "좌석 선택";
+
     const tr = document.createElement("tr");
+
     tr.innerHTML = `
       <td><input type="date" value="${r.date || ""}" data-field="date"></td>
       <td><input type="time" value="${r.time || ""}" data-field="time"></td>
@@ -272,20 +533,28 @@ function render() {
       <td><select data-field="ango">${makeOptions(cast.ango, r.ango)}</select></td>
       <td><select data-field="shizuko">${makeOptions(cast.shizuko, r.shizuko)}</select></td>
       <td><input type="checkbox" data-field="watched" ${r.watched ? "checked" : ""}></td>
-      <td><input type="text" value="${String(r.seat || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;")}" data-field="seat" placeholder="좌석"></td>
+      <td><button class="seat-button" data-seat="true">${seatLabel}</button></td>
       <td><button class="delete" data-delete="true">삭제</button></td>
     `;
 
     tr.querySelectorAll("[data-field]").forEach(input => {
       const field = input.dataset.field;
-      const eventName = input.type === "checkbox" ? "change" : "change";
-      input.addEventListener(eventName, () => {
-        const value = input.type === "checkbox" ? input.checked : input.value;
+      input.addEventListener("change", () => {
+        const value = input.type === "checkbox"
+          ? input.checked
+          : input.value;
         updateRecord(i, field, value);
       });
     });
 
-    tr.querySelector("[data-delete]").addEventListener("click", () => deleteRow(i));
+    tr.querySelector("[data-seat]").addEventListener("click", () => {
+      openSeatMap(i);
+    });
+
+    tr.querySelector("[data-delete]").addEventListener("click", () => {
+      deleteRow(i);
+    });
+
     body.appendChild(tr);
   });
 
@@ -301,6 +570,7 @@ function updateStats() {
 function setupFilter() {
   const select = document.getElementById("actorFilter");
   const names = [...cast.dazai, ...cast.ango, ...cast.shizuko];
+
   select.innerHTML = '<option value="">전체 배우 보기</option>' +
     names.map(name => `<option value="${name}">${name}</option>`).join("");
 }
@@ -310,6 +580,7 @@ function exportData() {
     [JSON.stringify(records, null, 2)],
     { type: "application/json" }
   );
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -323,24 +594,201 @@ function importData(event) {
   if (!file) return;
 
   const reader = new FileReader();
+
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
       if (!Array.isArray(data)) throw new Error();
+
       records = data;
+
+      records.forEach(r => {
+        if (!Array.isArray(r.seatSelections)) {
+          r.seatSelections = [];
+        }
+      });
+
       save();
       render();
       alert("기록을 불러왔습니다.");
     } catch {
       alert("올바른 기록 파일이 아닙니다.");
     }
+
     event.target.value = "";
   };
+
   reader.readAsText(file);
+}
+
+// 좌석 배치
+const seatLayout = {
+  left: [4,4,4,4,2,3,4,4,4,4,4,4,4,3],
+  center: [11,10,11,10,11,10,11,11,11,11,11,11,10,8],
+  right: [4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+};
+
+let currentRecordIndex = null;
+let temporarySeats = [];
+
+function seatId(block, row, number) {
+  return `${block}-${row}-${number}`;
+}
+
+function makeSeat(block, row, number) {
+  const id = seatId(block, row, number);
+  const selected = temporarySeats.includes(id);
+
+  const button = document.createElement("button");
+  button.className = "seat" + (selected ? " selected" : "");
+  button.textContent = selected ? "✓" : "";
+  button.title = `${block} ${row}열 ${number}번`;
+  button.type = "button";
+
+  button.addEventListener("click", () => {
+    toggleSeat(id);
+  });
+
+  return button;
+}
+
+function makeSeatRows(block, targetId) {
+  const target = document.getElementById(targetId);
+  target.innerHTML = "";
+
+  seatLayout[block].forEach((count, index) => {
+    const rowNumber = index + 1;
+    const row = document.createElement("div");
+    row.className = "seat-row";
+
+    const label = document.createElement("span");
+    label.className = "row-label";
+    label.textContent = rowNumber;
+    row.appendChild(label);
+
+    // 왼쪽 블록 5열과 6열의 기둥 공간
+    if (block === "left" && rowNumber === 5) {
+      row.appendChild(makePillar());
+      row.appendChild(makePillar());
+    }
+
+    if (block === "left" && rowNumber === 6) {
+      row.appendChild(makePillar());
+    }
+
+    // 가운데 블록 14열은 왼쪽 네 칸을 비워 둠
+    if (block === "center" && rowNumber === 14) {
+      for (let i = 0; i < 4; i++) {
+        row.appendChild(makeGap());
+      }
+    }
+
+    for (let seatNumber = 1; seatNumber <= count; seatNumber++) {
+      row.appendChild(makeSeat(block, rowNumber, seatNumber));
+    }
+
+    target.appendChild(row);
+  });
+}
+
+function makePillar() {
+  const pillar = document.createElement("span");
+  pillar.className = "pillar";
+  pillar.title = "기둥";
+  return pillar;
+}
+
+function makeGap() {
+  const gap = document.createElement("span");
+  gap.className = "seat-gap";
+  return gap;
+}
+
+function openSeatMap(index) {
+  currentRecordIndex = index;
+
+  const record = records[index];
+  temporarySeats = [...(record.seatSelections || [])];
+
+  document.getElementById("seatPerformance").textContent =
+    `${record.date || "날짜 미정"} ${record.time || ""}`;
+
+  document.getElementById("seatModal").classList.add("open");
+
+  makeSeatRows("left", "leftSeats");
+  makeSeatRows("center", "centerSeats");
+  makeSeatRows("right", "rightSeats");
+
+  updateSelectedSeatText();
+}
+
+function toggleSeat(id) {
+  if (temporarySeats.includes(id)) {
+    temporarySeats = temporarySeats.filter(seat => seat !== id);
+  } else {
+    temporarySeats.push(id);
+  }
+
+  makeSeatRows("left", "leftSeats");
+  makeSeatRows("center", "centerSeats");
+  makeSeatRows("right", "rightSeats");
+
+  updateSelectedSeatText();
+}
+
+function updateSelectedSeatText() {
+  const target = document.getElementById("selectedSeatText");
+
+  if (!temporarySeats.length) {
+    target.textContent = "선택한 좌석이 없습니다.";
+    return;
+  }
+
+  const names = temporarySeats.map(id => {
+    const [block, row, number] = id.split("-");
+    const blockName = {
+      left: "왼쪽",
+      center: "가운데",
+      right: "오른쪽"
+    }[block];
+
+    return `${blockName} ${row}열 ${number}번`;
+  });
+
+  target.textContent = names.join(" / ");
+}
+
+function clearSeats() {
+  temporarySeats = [];
+
+  makeSeatRows("left", "leftSeats");
+  makeSeatRows("center", "centerSeats");
+  makeSeatRows("right", "rightSeats");
+
+  updateSelectedSeatText();
+}
+
+function saveSeats() {
+  if (currentRecordIndex === null) return;
+
+  records[currentRecordIndex].seatSelections = [...temporarySeats];
+
+  // 기존 좌석 입력 기록도 새 좌석 선택 내용으로 갱신
+  records[currentRecordIndex].seat = temporarySeats.join(", ");
+
+  save();
+  render();
+  closeSeatMap();
+}
+
+function closeSeatMap() {
+  document.getElementById("seatModal").classList.remove("open");
+  currentRecordIndex = null;
 }
 
 setupFilter();
 render();
 </script>
+
 </body>
 </html>
