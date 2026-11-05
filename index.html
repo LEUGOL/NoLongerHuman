@@ -430,14 +430,38 @@ function renderSeatRecords(){
  const target=document.getElementById("seatRecordList");
  target.innerHTML="";
 
- const saved=records
-  .map((r,index)=>({r,index}))
-  .filter(x=>x.r.seatSelections&&x.r.seatSelections.length);
+ // 모든 공연의 좌석을 하나로 모으고 중복 제거
+ const allSeats=[...new Set(
+  records.flatMap(r=>
+   Array.isArray(r.seatSelections)?r.seatSelections:[]
+  )
+ )];
 
- if(!saved.length){
+ if(!allSeats.length){
   target.innerHTML='<div class="no-seats">아직 선택한 좌석이 없습니다.</div>';
   return;
  }
+
+ // 전체 좌석표 하나만 표시
+ const stage=document.createElement("div");
+ stage.className="mini-stage";
+ stage.textContent="STAGE";
+
+ const map=document.createElement("div");
+ map.className="mini-seat-map";
+
+ map.append(
+  createMiniSeatRows("left",allSeats),
+  createMiniSeatRows("center",allSeats),
+  createMiniSeatRows("right",allSeats)
+ );
+
+ const legend=document.createElement("div");
+ legend.className="mini-legend";
+ legend.innerHTML='<span class="mini-legend-mark"></span>내가 앉았던 좌석';
+
+ target.append(stage,map,legend);
+}
 
  saved.forEach(({r})=>{
   const item=document.createElement("div");
