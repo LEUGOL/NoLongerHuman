@@ -511,8 +511,11 @@ try{
  notes=JSON.parse(localStorage.getItem("nlh_notes")||"[]");
  if(!Array.isArray(notes))notes=[];
 }catch(e){notes=[];}
-
-
+let ratings={};
+try{
+ ratings=JSON.parse(localStorage.getItem("nlh_ratings")||"{}");
+}catch(e){ratings={};}
+ 
 const newSchedule=[
  {date:"2026-12-11",time:"20:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
  {date:"2026-12-12",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
@@ -541,7 +544,46 @@ function save(){
  localStorage.setItem("nlh_records",JSON.stringify(records));
  updateStats();
 }
+function saveRatings(){
+ localStorage.setItem("nlh_ratings",JSON.stringify(ratings));
+}
+ function ratingKey(r){
+ return `${r.date}_${r.time}`;
+}
+ function setRating(r, score){
+ const key=ratingKey(r);
 
+ if(score===0){
+  delete ratings[key];
+ }else{
+  ratings[key]=score;
+ }
+
+ saveRatings();
+}
+ function createRatingStars(r){
+ const wrapper=document.createElement("div");
+ wrapper.className="rating-stars";
+
+ const key=ratingKey(r);
+ const current=ratings[key]||0;
+
+ for(let i=1;i<=5;i++){
+  const star=document.createElement("button");
+  star.type="button";
+  star.className="rating-star";
+  star.textContent=i<=current?"★":"☆";
+
+  star.addEventListener("click",()=>{
+   setRating(r,i);
+   render();
+  });
+
+  wrapper.appendChild(star);
+ }
+
+ return wrapper;
+}
 function formatDate(value){
  if(!value)return "날짜 미정";
  const p=value.split("-");
