@@ -182,6 +182,41 @@ try {
   records = [];
 }
 
+const newSchedule = [
+  {date:"2026-12-11",time:"20:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
+  {date:"2026-12-12",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
+  {date:"2026-12-13",time:"18:00",dazai:"정재환",ango:"반정모",shizuko:"한수야"},
+  {date:"2026-12-15",time:"20:00",dazai:"안재영",ango:"반정모",shizuko:"박새힘"},
+  {date:"2026-12-16",time:"20:00",dazai:"박정원",ango:"손유동",shizuko:"김주연"},
+  {date:"2026-12-17",time:"20:00",dazai:"정재환",ango:"강정우",shizuko:"박새힘"},
+  {date:"2026-12-18",time:"20:00",dazai:"박정원",ango:"반정모",shizuko:"한수야"},
+  {date:"2026-12-19",time:"15:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
+  {date:"2026-12-19",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
+  {date:"2026-12-20",time:"14:00",dazai:"정재환",ango:"반정모",shizuko:"김주연"},
+  {date:"2026-12-20",time:"18:00",dazai:"안재영",ango:"강정우",shizuko:"한수야"}
+];
+
+newSchedule.forEach(item => {
+  const existing = records.find(
+    r => r.date === item.date && r.time === item.time
+  );
+
+  if (existing) {
+    ["dazai", "ango", "shizuko"].forEach(key => {
+      if (!existing[key]) existing[key] = item[key];
+    });
+  } else {
+    records.push({
+      ...item,
+      watched: false,
+      seat: ""
+    });
+  }
+});
+
+localStorage.setItem("nlh_records", JSON.stringify(records));
+}
+
 function save() {
   localStorage.setItem("nlh_records", JSON.stringify(records));
   updateStats();
