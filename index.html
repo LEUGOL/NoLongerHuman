@@ -39,6 +39,15 @@ td.cast-cell{text-align:left;line-height:1.65}
 .cast-cell span{display:inline-block;margin-right:7px;white-space:nowrap}
 .cast-role{display:inline-block!important;color:#987B78;font-size:10px;margin-right:4px}
 .date-main{font-weight:bold;color:#762D3C;font-size:14px}
+ .event-label{
+ display:block;
+ margin-top:3px;
+ color:#A52C3B;
+ font-size:10px;
+ font-weight:bold;
+ line-height:1.3;
+ white-space:normal;
+}
 .time-main{font-variant-numeric:tabular-nums;white-space:nowrap}
 .watched-check{width:19px;height:19px;accent-color:#A52C3B}
 .seat-button{background:#273544;font-size:11px;padding:7px 8px;white-space:nowrap}
@@ -673,7 +682,12 @@ function render(){
   const tr=document.createElement("tr");
 
   const date=document.createElement("td");
-  date.innerHTML=`<span class="date-main">${formatDate(r.date)}</span>`;
+  const dayEvents=events.filter(event=>event.date===r.date);
+
+date.innerHTML=`
+ <span class="date-main">${formatDate(r.date)}</span>
+ ${dayEvents.map(event=>`<span class="event-label">${event.name}</span>`).join("")}
+`;
 
   const time=document.createElement("td");
   time.innerHTML=`<span class="time-main">${r.time||"-"}</span>`;
