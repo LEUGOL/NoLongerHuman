@@ -471,6 +471,16 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
    <option value="">관극한 공연을 선택해 주세요.</option>
   </select>
 
+  <label>오늘의 별점</label>
+<div id="noteRating" class="rating-stars">
+ <button type="button" class="rating-star" onclick="selectNoteRating(1)">☆</button>
+ <button type="button" class="rating-star" onclick="selectNoteRating(2)">☆</button>
+ <button type="button" class="rating-star" onclick="selectNoteRating(3)">☆</button>
+ <button type="button" class="rating-star" onclick="selectNoteRating(4)">☆</button>
+ <button type="button" class="rating-star" onclick="selectNoteRating(5)">☆</button>
+</div>
+
+<label for="noteScene">기억하고 싶은 장면</label>
   <label for="noteScene">기억하고 싶은 장면</label>
   <textarea id="noteScene" placeholder="오늘 가장 기억에 남았던 장면은?"></textarea>
 
@@ -577,6 +587,18 @@ function saveRatings(){
  }
 
  saveRatings();
+}
+ let noteRating=0;
+
+function selectNoteRating(score){
+ noteRating=score;
+
+ const stars=document.querySelectorAll("#noteRating .rating-star");
+
+ stars.forEach((star,index)=>{
+  star.textContent=index<score?"★":"☆";
+  star.classList.toggle("selected",index<score);
+ });
 }
  function createRatingStars(r){
  const wrapper=document.createElement("div");
