@@ -339,7 +339,7 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
 <div class="container">
 <header>
  <h1>NO LONGER HUMAN</h1>
- <p>인간실격 · MY THEATRE RECORD</p>
+ <p>인간실격</p>
 </header>
 
 <section>
@@ -372,8 +372,18 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
  <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
  <div class="table-wrap">
   <table>
-   <thead><tr><th>날짜</th><th>시간</th><th>캐스트</th><th>관극</th><th>좌석</th></tr></thead>
-   <tbody id="scheduleBody"></tbody>
+  <thead>
+ <tr>
+  <th>날짜</th>
+  <th>시간</th>
+  <th>다자이</th>
+  <th>안고</th>
+  <th>시즈코</th>
+  <th>관극</th>
+  <th>좌석</th>
+ </tr>
+</thead>
+<tbody id="scheduleBody"></tbody>
   </table>
  </div>
 </section>
@@ -533,9 +543,14 @@ function render(){
   const time=document.createElement("td");
   time.innerHTML=`<span class="time-main">${r.time||"-"}</span>`;
 
-  const castCell=document.createElement("td");
-  castCell.className="cast-cell";
-  castCell.innerHTML=`<span><i class="cast-role">다자이</i>${r.dazai||"-"}</span><span><i class="cast-role">안고</i>${r.ango||"-"}</span><span><i class="cast-role">시즈코</i>${r.shizuko||"-"}</span>`;
+  const dazai=document.createElement("td");
+dazai.textContent=r.dazai||"-";
+
+const ango=document.createElement("td");
+ango.textContent=r.ango||"-";
+
+const shizuko=document.createElement("td");
+shizuko.textContent=r.shizuko||"-";
 
   const watched=document.createElement("td");
   const check=document.createElement("input");
