@@ -366,7 +366,21 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
  color:#987B78;text-align:center;padding:18px 5px;
  font-size:12px;line-height:1.7
 }
+/* 공연 일정만 스크롤 */
+.schedule-scroll{
+ max-height:500px;
+ overflow-y:auto;
+ overflow-x:auto;
+ position:relative;
+ -webkit-overflow-scrolling:touch;
+}
 
+.schedule-scroll thead th{
+ position:sticky;
+ top:0;
+ z-index:2;
+ background:#401E29;
+}
 </style>
 </head>
 <body>
@@ -405,20 +419,22 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
  </div>
  <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
  <div class="table-wrap">
-  <table>
+ <div class="schedule-scroll">
+ <table>
   <thead>
- <tr>
-  <th>날짜</th>
-  <th>시간</th>
-  <th>다자이</th>
-  <th>안고</th>
-  <th>시즈코</th>
-  <th>관극</th>
-  <th>좌석</th>
- </tr>
-</thead>
-<tbody id="scheduleBody"></tbody>
-  </table>
+   <tr>
+    <th>날짜</th>
+    <th>시간</th>
+    <th>다자이</th>
+    <th>안고</th>
+    <th>시즈코</th>
+    <th>관극</th>
+    <th>좌석</th>
+   </tr>
+  </thead>
+  <tbody id="scheduleBody"></tbody>
+ </table>
+</div>
  </div>
 </section>
 
