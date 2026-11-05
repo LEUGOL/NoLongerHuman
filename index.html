@@ -11,7 +11,7 @@
 
 body {
   margin: 0;
-  padding: 16px 8px;
+  padding: 12px 6px;
   background: #f4efe7;
   color: #392e2b;
   font-family: Arial, sans-serif;
@@ -26,9 +26,9 @@ body {
 header {
   background: #542f36;
   color: #fff8ed;
-  padding: 28px 22px;
+  padding: 26px 20px;
   border-radius: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 header h1 {
@@ -43,25 +43,25 @@ section {
   background: #fffdf9;
   border: 1px solid #e5d9cc;
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
 }
 
 h2 {
   color: #663b43;
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   font-size: 19px;
 }
 
 .cast-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .cast-card {
   background: #f7f1e9;
-  padding: 13px;
+  padding: 12px;
   border-radius: 9px;
 }
 
@@ -79,13 +79,13 @@ h2 {
 
 .stats {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .stat {
   flex: 1;
   background: #f7f1e9;
-  padding: 13px;
+  padding: 12px;
   border-radius: 9px;
   font-size: 13px;
 }
@@ -119,14 +119,14 @@ button.delete { background: #a65b56; }
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .actions button { font-size: 13px; }
 
 #actorFilter {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .table-wrap {
@@ -141,10 +141,10 @@ table {
 }
 
 th, td {
-  padding: 7px 3px;
+  padding: 6px 2px;
   border-bottom: 1px solid #eadfd4;
   text-align: center;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 th {
@@ -180,6 +180,36 @@ td button {
   color: #8c796e;
 }
 
+/* 날짜 표시 */
+.date-picker-wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #d9c9bb;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.date-label {
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.date-picker-wrap input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
 /* 좌석 선택 창 */
 .seat-modal {
   display: none;
@@ -187,7 +217,7 @@ td button {
   inset: 0;
   z-index: 1000;
   background: rgba(30, 20, 20, .7);
-  padding: 10px;
+  padding: 8px;
   overflow-y: auto;
 }
 
@@ -200,8 +230,8 @@ td button {
 .seat-window {
   width: 100%;
   max-width: 1000px;
-  margin: 10px auto;
-  padding: 18px;
+  margin: 8px auto;
+  padding: 16px;
   background: #fffdf9;
   border-radius: 12px;
 }
@@ -221,8 +251,8 @@ td button {
 }
 
 .stage {
-  margin: 16px auto;
-  padding: 11px;
+  margin: 14px auto;
+  padding: 10px;
   max-width: 400px;
   text-align: center;
   color: white;
@@ -234,9 +264,9 @@ td button {
 .seat-legend {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 15px;
+  margin-bottom: 13px;
   font-size: 12px;
 }
 
@@ -253,23 +283,25 @@ td button {
 
 .legend-square.selected { background: #663b43; }
 
+/* 세 블록을 가로로 배치 */
 .seat-map {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
+  width: 100%;
 }
 
 .seat-block {
   background: #f7f1e9;
-  padding: 10px 6px;
+  padding: 9px 5px;
   border-radius: 9px;
   min-width: 0;
 }
 
 .seat-block h3 {
   text-align: center;
-  margin: 0 0 10px;
+  margin: 0 0 9px;
   color: #663b43;
   font-size: 13px;
 }
@@ -301,8 +333,9 @@ td button {
   border-radius: 4px;
   background: #fffdf9;
   color: #663b43;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 21px;
+  flex-shrink: 0;
 }
 
 .seat.selected {
@@ -343,94 +376,164 @@ td button {
 
 /* 휴대폰 화면 */
 @media(max-width:600px) {
-  body { padding: 7px 4px; }
+  body { padding: 4px 2px; }
 
   header {
-    padding: 20px 14px;
-    margin-bottom: 9px;
+    padding: 17px 12px;
+    margin-bottom: 7px;
+    border-radius: 8px;
   }
 
-  header h1 { font-size: 20px; }
+  header h1 { font-size: 18px; }
+  header p { font-size: 12px; }
 
   section {
-    padding: 10px 5px;
-    margin-bottom: 9px;
-    border-radius: 9px;
+    padding: 8px 4px;
+    margin-bottom: 7px;
+    border-radius: 8px;
   }
 
   h2 {
-    font-size: 16px;
-    margin-left: 4px;
+    font-size: 15px;
+    margin-left: 3px;
+    margin-bottom: 9px;
   }
 
-  .cast-card { padding: 9px 6px; }
-  .cast-card h3 { font-size: 13px; }
-  .cast-card p { font-size: 12px; }
+  .cast-grid { gap: 4px; }
+  .cast-card { padding: 8px 4px; }
+  .cast-card h3 { font-size: 11px; }
+  .cast-card p { font-size: 11px; line-height: 1.7; }
 
-  .stat { padding: 10px; }
-  .stat strong { font-size: 22px; }
+  .stats { gap: 5px; }
+  .stat { padding: 8px 6px; font-size: 11px; }
+  .stat strong { font-size: 21px; }
 
-  .actions { gap: 4px; }
-  .actions button { padding: 8px 6px; font-size: 11px; }
+  .actions { gap: 3px; }
+  .actions button { padding: 7px 5px; font-size: 10px; }
 
   th {
-    font-size: 10px;
-    padding: 6px 1px;
+    font-size: 9px;
+    padding: 5px 0;
   }
 
-  td { padding: 5px 1px; }
+  td { padding: 4px 0; }
 
   td input, td select {
-    font-size: 10px;
-    padding: 5px 1px;
-    border-radius: 4px;
+    font-size: 9px;
+    padding: 4px 0;
+    border-radius: 3px;
   }
 
   td button {
-    font-size: 10px;
-    padding: 6px 2px;
+    font-size: 9px;
+    padding: 6px 1px;
   }
 
   td input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
   }
 
-  /* 표의 각 칸 너비 */
-  th:nth-child(1) { width: 19%; }
-  th:nth-child(2) { width: 11%; }
+  .date-picker-wrap {
+    min-height: 27px;
+  }
+
+  .date-label { font-size: 9px; }
+
+  th:nth-child(1) { width: 17%; }
+  th:nth-child(2) { width: 10%; }
   th:nth-child(3),
   th:nth-child(4),
   th:nth-child(5) { width: 12%; }
   th:nth-child(6) { width: 7%; }
-  th:nth-child(7) { width: 17%; }
+  th:nth-child(7) { width: 18%; }
   th:nth-child(8) { width: 10%; }
 
-  .seat-window { padding: 12px 5px; }
+  .seat-modal { padding: 3px; }
+
+  .seat-window {
+    padding: 10px 3px;
+    margin: 3px auto;
+    border-radius: 8px;
+  }
+
+  .seat-top { padding: 0 5px; }
+  .seat-top h2 { font-size: 15px; }
+  #seatPerformance { font-size: 11px; }
+  .seat-top button { font-size: 10px; padding: 6px 9px; }
+
+  .stage {
+    margin: 9px auto;
+    padding: 7px;
+    font-size: 11px;
+    max-width: 75%;
+  }
+
+  .seat-legend {
+    gap: 7px;
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .legend-square {
+    width: 12px;
+    height: 12px;
+  }
 
   .seat-map {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    width: 100%;
   }
 
   .seat-block {
-    width: 100%;
-    max-width: 360px;
-    padding: 10px 4px;
+    flex: 0 0 auto;
+    padding: 5px 1px;
+    border-radius: 5px;
   }
 
-  .seat-row { gap: 3px; }
-
-  .seat, .seat-gap, .pillar {
-    width: 23px;
-    min-width: 23px;
-    height: 25px;
+  .seat-block h3 {
+    font-size: 9px;
+    margin-bottom: 6px;
+    white-space: nowrap;
   }
 
-  .seat { line-height: 23px; }
+  .seat-row {
+    gap: 1px;
+    min-height: 16px;
+    margin: 2px 0;
+  }
 
-  .row-label { width: 20px; }
+  .row-label {
+    width: 11px;
+    font-size: 8px;
+  }
+
+  .seat {
+    width: 12px;
+    min-width: 12px;
+    height: 15px;
+    font-size: 7px;
+    line-height: 13px;
+    border-radius: 2px;
+    padding: 0;
+  }
+
+  .seat-gap, .pillar {
+    width: 12px;
+    height: 15px;
+  }
+
+  .seat-bottom {
+    margin-top: 10px;
+    padding: 9px 5px 0;
+  }
+
+  .seat-bottom p { font-size: 12px; }
+  #selectedSeatText { font-size: 11px; }
+  .seat-bottom button { font-size: 10px; padding: 7px 9px; }
 }
 </style>
 </head>
@@ -530,17 +633,17 @@ td button {
 
     <div class="seat-map">
       <div class="seat-block">
-        <h3>LEFT BLOCK</h3>
+        <h3>LEFT</h3>
         <div id="leftSeats"></div>
       </div>
 
       <div class="seat-block">
-        <h3>CENTER BLOCK</h3>
+        <h3>CENTER</h3>
         <div id="centerSeats"></div>
       </div>
 
       <div class="seat-block">
-        <h3>RIGHT BLOCK</h3>
+        <h3>RIGHT</h3>
         <div id="rightSeats"></div>
       </div>
     </div>
@@ -616,6 +719,23 @@ function save() {
   updateStats();
 }
 
+function formatDate(dateString) {
+  if (!dateString) return "날짜 선택";
+
+  const parts = dateString.split("-");
+  if (parts.length !== 3) return dateString;
+
+  const date = new Date(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2])
+  );
+
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+
+  return `${Number(parts[1])}.${Number(parts[2])} (${weekdays[date.getDay()]})`;
+}
+
 function makeOptions(list, selected) {
   return '<option value="">선택</option>' +
     list.map(name =>
@@ -668,14 +788,21 @@ function render() {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td><input type="date" value="${r.date || ""}" data-field="date"></td>
+      <td>
+        <div class="date-picker-wrap">
+          <span class="date-label">${formatDate(r.date)}</span>
+          <input type="date" value="${r.date || ""}" data-field="date" aria-label="공연 날짜">
+        </div>
+      </td>
       <td><input type="time" value="${r.time || ""}" data-field="time"></td>
       <td><select data-field="dazai">${makeOptions(cast.dazai, r.dazai)}</select></td>
       <td><select data-field="ango">${makeOptions(cast.ango, r.ango)}</select></td>
       <td><select data-field="shizuko">${makeOptions(cast.shizuko, r.shizuko)}</select></td>
       <td><input type="checkbox" data-field="watched" ${r.watched ? "checked" : ""}></td>
-      <td><button class="seat-button" data-seat="true">좌석 선택</button>
-      <span class="seat-count">${(r.seatSelections || []).length}개 선택</span></td>
+      <td>
+        <button class="seat-button" data-seat="true">좌석 선택</button>
+        <span class="seat-count">${(r.seatSelections || []).length}개 선택</span>
+      </td>
       <td><button class="delete" data-delete="true">삭제</button></td>
     `;
 
@@ -688,6 +815,10 @@ function render() {
           : input.value;
 
         updateRecord(i, field, value);
+
+        if (field === "date") {
+          tr.querySelector(".date-label").textContent = formatDate(value);
+        }
       });
     });
 
@@ -820,7 +951,7 @@ function makeSeat(block, row, localNumber) {
 
   const button = document.createElement("button");
   button.className = "seat" + (selected ? " selected" : "");
-  button.textContent = selected ? "✓" : "";
+  button.textContent = selected ? "✓" : number;
   button.type = "button";
   button.title = `${row}열 ${number}번`;
 
@@ -880,12 +1011,14 @@ function makeGap() {
 
 function openSeatMap(index) {
   currentRecordIndex = index;
+
+  /* 좌석은 공연별로 따로 불러옴 */
   temporarySeats = [...(records[index].seatSelections || [])];
 
   const r = records[index];
 
   document.getElementById("seatPerformance").textContent =
-    `${r.date || "날짜 미정"} ${r.time || ""}`;
+    `${r.date ? formatDate(r.date) : "날짜 미정"} ${r.time || ""}`;
 
   document.getElementById("seatModal").classList.add("open");
 
