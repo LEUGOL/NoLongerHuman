@@ -1,0 +1,16 @@
+{
+  "name": "NO LONGER HUMAN",
+  "short_name": "인간실격",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4efe7",
+  "theme_color": "#542f36",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
