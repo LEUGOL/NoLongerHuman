@@ -736,6 +736,26 @@ function saveNote(){
   ratings[key]=noteRating;
   saveRatings();
  }
+
+ const scene=document.getElementById("noteScene").value;
+ const memo=document.getElementById("noteMemo").value;
+
+ if(scene.trim()||memo.trim()){
+  const existing=notes.findIndex(n=>n.recordKey===key);
+  const note={recordKey:key,scene,memo};
+
+  if(existing>=0){
+   notes[existing]=note;
+  }else{
+   notes.push(note);
+  }
+
+  localStorage.setItem("nlh_notes",JSON.stringify(notes));
+ }
+
+ renderNotes();
+}
+
 function loadNoteForPerformance(){
  const index=document.getElementById("notePerformance").value;
 
@@ -760,24 +780,18 @@ function loadNoteForPerformance(){
 
  selectNoteRating(noteRating);
 }
- 
- const scene=document.getElementById("noteScene").value;
- const memo=document.getElementById("noteMemo").value;
 
- if(scene.trim()||memo.trim()){
-  const existing=notes.findIndex(n=>n.recordKey===key);
-  const note={recordKey:key,scene,memo};
+function deleteNote(key){
+ if(!confirm("이 관극 기록과 별점을 삭제할까요?"))return;
 
-  if(existing>=0){
-   notes[existing]=note;
-  }else{
-   notes.push(note);
-  }
+ notes=notes.filter(n=>n.recordKey!==key);
+ delete ratings[key];
 
-  localStorage.setItem("nlh_notes",JSON.stringify(notes));
- }
+ localStorage.setItem("nlh_notes",JSON.stringify(notes));
+ saveRatings();
 
  renderNotes();
+ loadNoteForPerformance();
 }
  
 function updateStats(){
@@ -1124,7 +1138,12 @@ function renderNotes(){
    ${note?.scene?`<p><strong>기억하고 싶은 장면</strong><br>${note.scene}</p>`:""}
    ${note?.memo?`<p><strong>오늘의 감상</strong><br>${note.memo}</p>`:""}
   `;
+const deleteButton=document.createElement("button");
+  deleteButton.textContent="기록 삭제";
+  deleteButton.className="secondary";
+  deleteButton.onclick=()=>deleteNote(key);
 
+  item.appendChild(deleteButton);
   list.appendChild(item);
  });
  }
