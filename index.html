@@ -148,6 +148,47 @@ td.cast-cell{text-align:left;line-height:1.65}
  #selectedSeatText{font-size:11px}
  .seat-bottom button{font-size:10px;padding:7px 9px}
 }
+ /* MY ACTOR COUNT */
+.actor-count-list{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:8px;
+}
+.actor-count-card{
+ background:#f7f1e9;
+ padding:11px;
+ border-radius:8px;
+}
+.actor-count-card h3{
+ margin:0 0 8px;
+ color:#663b43;
+ font-size:14px;
+}
+.actor-count-person{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:4px;
+ padding:5px 0;
+ border-bottom:1px solid #eadfd4;
+ font-size:13px;
+}
+.actor-count-person:last-child{
+ border-bottom:0;
+}
+.actor-count-number{
+ color:#663b43;
+ font-weight:bold;
+ white-space:nowrap;
+}
+
+@media(max-width:600px){
+ .actor-count-list{gap:4px}
+ .actor-count-card{padding:8px 5px}
+ .actor-count-card h3{font-size:10px;margin-bottom:5px}
+ .actor-count-person{font-size:9px;padding:5px 0}
+ .actor-count-number{font-size:9px}
+}
 </style>
 </head>
 <body>
@@ -173,7 +214,10 @@ td.cast-cell{text-align:left;line-height:1.65}
   <div class="stat"><strong id="watchedCount">0</strong>나의 관극 횟수</div>
  </div>
 </section>
-
+<section>
+ <h2>MY ACTOR COUNT</h2>
+ <div id="actorCountList" class="actor-count-list"></div>
+</section>
 <section>
  <h2>PERFORMANCE SCHEDULE</h2>
  <div class="actions">
@@ -357,6 +401,51 @@ function render(){
 function updateStats(){
  document.getElementById("totalCount").textContent=records.length;
  document.getElementById("watchedCount").textContent=records.filter(r=>r.watched).length;
+
+ renderActorCounts();
+}
+
+function renderActorCounts(){
+ const target=document.getElementById("actorCountList");
+ if(!target)return;
+
+ target.innerHTML="";
+
+ const roles=[
+  {title:"다자이 오사무",key:"dazai"},
+  {title:"안고",key:"ango"},
+  {title:"오타 시즈코",key:"shizuko"}
+ ];
+
+ roles.forEach(role=>{
+  const card=document.createElement("div");
+  card.className="actor-count-card";
+
+  const heading=document.createElement("h3");
+  heading.textContent=role.title;
+  card.appendChild(heading);
+
+  cast[role.key].forEach(actor=>{
+   const count=records.filter(r=>
+    r.watched===true && r[role.key]===actor
+   ).length;
+
+   const person=document.createElement("div");
+   person.className="actor-count-person";
+
+   const name=document.createElement("span");
+   name.textContent=actor;
+
+   const number=document.createElement("span");
+   number.className="actor-count-number";
+   number.textContent=count+"회";
+
+   person.append(name,number);
+   card.appendChild(person);
+  });
+
+  target.appendChild(card);
+ });
 }
 
 function setupFilter(){
