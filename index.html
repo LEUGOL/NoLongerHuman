@@ -882,7 +882,8 @@ function renderNotes(){
   const option=document.createElement("option");
   option.value=index;
   option.textContent=
-   `${formatDate(r.date)} ${r.time||""} · ${r.dazai||""}`;
+  option.textContent=
+ `${formatDate(r.date)} ${r.time||""} · 다자이 ${r.dazai||"-"} / 안고 ${r.ango||"-"} / 시즈코 ${r.shizuko||"-"}`;
 
   select.appendChild(option);
  });
