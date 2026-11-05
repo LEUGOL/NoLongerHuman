@@ -644,6 +644,11 @@ function render(){
   shizuko.textContent=r.shizuko||"-";
 
   const watched=document.createElement("td");
+  const ratingCell=document.createElement("td");
+
+if(r.watched){
+ ratingCell.appendChild(createRatingStars(r));
+}
   const check=document.createElement("input");
   check.type="checkbox";
   check.className="watched-check";
@@ -662,8 +667,8 @@ function render(){
   seatButton.addEventListener("click",()=>openSeatMap(i));
   seat.appendChild(seatButton);
 
-  [date,time,dazai,ango,shizuko,watched,seat]
-   .forEach(td=>tr.appendChild(td));
+[date,time,dazai,ango,shizuko,watched,ratingCell,seat]
+ .forEach(td=>tr.appendChild(td));
 
   body.appendChild(tr);
  });
