@@ -366,13 +366,15 @@ function setupFilter(){
 }
 
 /* MY SEATS 좌석표 만들기 */
-function createMiniSeat(block,row,local,selections){
+function createMiniSeat(block,row,local,seatCounts){
  const id=seatId(block,row,local);
- const selected=selections.includes(id);
+ const count=seatCounts[id]||0;
+
  const seat=document.createElement("div");
- seat.className="mini-seat"+(selected?" selected":"");
- seat.textContent=selected?"✓":"";
- seat.title=seatDescription(id);
+ seat.className="mini-seat"+(count>0?" selected":"");
+ seat.textContent=count>0?`✓${count}`:"";
+ seat.title=seatDescription(id)+(count>0?` · ${count}회`:"");
+
  return seat;
 }
 
@@ -388,7 +390,7 @@ function createMiniGap(){
  return g;
 }
 
-function createMiniSeatRows(block,selections){
+function createMiniSeatRows(block,seatCounts){
  const wrapper=document.createElement("div");
  wrapper.className="mini-seat-block";
 
@@ -417,7 +419,7 @@ function createMiniSeatRows(block,selections){
   }
 
   for(let n=1;n<=count;n++){
-   row.appendChild(createMiniSeat(block,rowNumber,n,selections));
+   row.appendChild(createMiniSeat(block,rowNumber,n,seatCounts));
   }
 
   wrapper.appendChild(row);
@@ -430,52 +432,38 @@ function renderSeatRecords(){
  const target=document.getElementById("seatRecordList");
  target.innerHTML="";
 
- const saved=records
-  .map((r,index)=>({r,index}))
-  .filter(x=>x.r.seatSelections&&x.r.seatSelections.length);
+ // 공연별 좌석 선택 횟수 합산
+ const seatCounts={};
 
- if(!saved.length){
-  target.innerHTML='<div class="no-seats">아직 선택한 좌석이 없습니다.</div>';
-  return;
- }
+ records.forEach(r=>{
+  const seats=Array.isArray(r.seatSelections)?r.seatSelections:[];
 
- saved.forEach(({r})=>{
-  const item=document.createElement("div");
-  item.className="seat-record";
-
-  const info=document.createElement("div");
-  info.className="seat-record-info";
-
-  const date=document.createElement("div");
-  date.className="seat-record-date";
-  date.textContent=`${formatDate(r.date)} ${r.time||""}`;
-
-  const actors=document.createElement("div");
-  actors.className="seat-record-cast";
-  actors.textContent=`${r.dazai||""} · ${r.ango||""} · ${r.shizuko||""}`;
-
-  info.append(date,actors);
-
-  const stage=document.createElement("div");
-  stage.className="mini-stage";
-  stage.textContent="STAGE";
-
-  const map=document.createElement("div");
-  map.className="mini-seat-map";
-
-  map.append(
-   createMiniSeatRows("left",r.seatSelections),
-   createMiniSeatRows("center",r.seatSelections),
-   createMiniSeatRows("right",r.seatSelections)
-  );
-
-  const legend=document.createElement("div");
-  legend.className="mini-legend";
-  legend.innerHTML='<span class="mini-legend-mark"></span>내가 선택한 좌석';
-
-  item.append(info,stage,map,legend);
-  target.appendChild(item);
+  seats.forEach(id=>{
+   seatCounts[id]=(seatCounts[id]||0)+1;
+  });
  });
+
+ // 무대 표시
+ const stage=document.createElement("div");
+ stage.className="mini-stage";
+ stage.textContent="STAGE";
+
+ // 전체 좌석표 하나 만들기
+ const map=document.createElement("div");
+ map.className="mini-seat-map";
+
+ map.append(
+  createMiniSeatRows("left",seatCounts),
+  createMiniSeatRows("center",seatCounts),
+  createMiniSeatRows("right",seatCounts)
+ );
+
+ // 안내 문구
+ const legend=document.createElement("div");
+ legend.className="mini-legend";
+ legend.textContent="체크 표시 옆 숫자는 해당 좌석에 앉은 횟수";
+
+ target.append(stage,map,legend);
 }
 
 /* 좌석 선택 */
