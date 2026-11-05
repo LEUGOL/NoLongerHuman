@@ -5,63 +5,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NO LONGER HUMAN</title>
+
 <style>
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  padding: 30px 16px;
+  padding: 16px 8px;
   background: #f4efe7;
   color: #392e2b;
   font-family: Arial, sans-serif;
 }
 
-.container { max-width: 1100px; margin: auto; }
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
 
 header {
   background: #542f36;
   color: #fff8ed;
-  padding: 35px;
-  border-radius: 14px;
-  margin-bottom: 22px;
+  padding: 28px 22px;
+  border-radius: 12px;
+  margin-bottom: 14px;
 }
 
-header h1 { margin: 0 0 8px; letter-spacing: 3px; }
-header p { margin: 0; opacity: .8; }
+header h1 {
+  margin: 0 0 8px;
+  letter-spacing: 2px;
+  font-size: 24px;
+}
+
+header p { margin: 0; opacity: .85; }
 
 section {
   background: #fffdf9;
   border: 1px solid #e5d9cc;
-  border-radius: 14px;
-  padding: 22px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
 }
 
-h2 { color: #663b43; margin-top: 0; }
+h2 {
+  color: #663b43;
+  margin: 0 0 14px;
+  font-size: 19px;
+}
 
 .cast-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
 .cast-card {
   background: #f7f1e9;
-  padding: 18px;
-  border-radius: 10px;
+  padding: 13px;
+  border-radius: 9px;
 }
 
-.cast-card h3 { margin: 0 0 10px; color: #663b43; }
-.cast-card p { margin: 0; line-height: 1.8; }
+.cast-card h3 {
+  margin: 0 0 8px;
+  color: #663b43;
+  font-size: 15px;
+}
 
-.stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.cast-card p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+}
 
 .stat {
   flex: 1;
-  min-width: 130px;
   background: #f7f1e9;
-  padding: 16px;
-  border-radius: 10px;
+  padding: 13px;
+  border-radius: 9px;
+  font-size: 13px;
 }
 
 .stat strong {
@@ -73,8 +99,8 @@ h2 { color: #663b43; margin-top: 0; }
 button, select, input {
   font: inherit;
   border: 1px solid #d9c9bb;
-  border-radius: 7px;
-  padding: 9px;
+  border-radius: 6px;
+  padding: 8px;
   background: white;
   color: #392e2b;
 }
@@ -84,47 +110,84 @@ button {
   color: white;
   border: 0;
   cursor: pointer;
-  margin: 4px 3px 4px 0;
 }
 
-button:hover { background: #81545b; }
 button.secondary { background: #8c796e; }
+button.delete { background: #a65b56; }
 
-.table-wrap { overflow-x: auto; }
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.actions button { font-size: 13px; }
+
+#actorFilter {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 850px;
+  table-layout: fixed;
 }
 
 th, td {
-  padding: 9px 7px;
+  padding: 7px 3px;
   border-bottom: 1px solid #eadfd4;
   text-align: center;
+  overflow-wrap: break-word;
 }
 
-th { background: #f3ebe2; color: #663b43; }
-td input, td select { width: 100%; min-width: 90px; }
-td input[type="checkbox"] { width: auto; min-width: auto; }
+th {
+  background: #f3ebe2;
+  color: #663b43;
+  font-size: 12px;
+}
 
-.delete { background: #a65b56; }
-.actions { margin-bottom: 12px; }
-#actorFilter { margin-bottom: 12px; }
+td input, td select {
+  width: 100%;
+  min-width: 0;
+  padding: 6px 2px;
+  font-size: 12px;
+}
 
-.seat-button {
-  min-width: 105px;
+td input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+td button {
+  font-size: 11px;
+  padding: 7px 4px;
   white-space: nowrap;
-  font-size: 13px;
 }
 
+.seat-button { background: #8c796e; }
+.seat-count { display: block; font-size: 10px; margin-top: 3px; }
+
+.empty-message {
+  text-align: center;
+  padding: 25px;
+  color: #8c796e;
+}
+
+/* 좌석 선택 창 */
 .seat-modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(30, 20, 20, .65);
-  padding: 15px;
+  background: rgba(30, 20, 20, .7);
+  padding: 10px;
   overflow-y: auto;
 }
 
@@ -136,93 +199,92 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
 
 .seat-window {
   width: 100%;
-  max-width: 1050px;
-  margin: 20px auto;
-  padding: 22px;
+  max-width: 1000px;
+  margin: 10px auto;
+  padding: 18px;
   background: #fffdf9;
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .seat-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.seat-top h2 { margin-bottom: 8px; }
+.seat-top h2 { margin-bottom: 5px; }
+
+#seatPerformance {
+  font-size: 13px;
+  color: #8c796e;
+}
 
 .stage {
-  margin: 18px auto 24px;
-  padding: 12px;
-  max-width: 500px;
+  margin: 16px auto;
+  padding: 11px;
+  max-width: 400px;
   text-align: center;
   color: white;
   background: #542f36;
   border-radius: 5px;
-  letter-spacing: 5px;
+  letter-spacing: 4px;
 }
 
 .seat-legend {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-bottom: 18px;
-  font-size: 13px;
+  margin-bottom: 15px;
+  font-size: 12px;
 }
 
 .legend-square {
   display: inline-block;
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
   border: 1px solid #c9b8aa;
-  border-radius: 4px;
+  border-radius: 3px;
   vertical-align: middle;
-  margin-right: 5px;
+  margin-right: 4px;
   background: #f7f1e9;
 }
 
 .legend-square.selected { background: #663b43; }
 
-.seat-map-scroll {
-  overflow-x: auto;
-  padding-bottom: 12px;
-}
-
 .seat-map {
-  min-width: 690px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 22px;
+  gap: 12px;
 }
 
 .seat-block {
   background: #f7f1e9;
-  padding: 12px 8px;
-  border-radius: 10px;
-  flex-shrink: 0;
+  padding: 10px 6px;
+  border-radius: 9px;
+  min-width: 0;
 }
 
 .seat-block h3 {
   text-align: center;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #663b43;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .seat-row {
   display: flex;
   align-items: center;
-  gap: 3px;
-  min-height: 27px;
+  justify-content: center;
+  gap: 2px;
+  min-height: 25px;
   margin: 3px 0;
 }
 
 .row-label {
-  width: 22px;
+  width: 18px;
   flex-shrink: 0;
   text-align: center;
   color: #8c796e;
@@ -231,7 +293,7 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
 
 .seat {
   width: 22px;
-  height: 22px;
+  height: 23px;
   min-width: 22px;
   padding: 0;
   margin: 0;
@@ -239,11 +301,9 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
   border-radius: 4px;
   background: #fffdf9;
   color: #663b43;
-  font-size: 13px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 21px;
 }
-
-.seat:hover { background: #eadbd0; }
 
 .seat.selected {
   background: #663b43;
@@ -252,39 +312,125 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
   font-weight: bold;
 }
 
-.seat-gap {
+.seat-gap, .pillar {
   width: 22px;
-  height: 22px;
+  height: 23px;
   flex-shrink: 0;
 }
 
 .pillar {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
   border: 1px dashed #b9a89a;
   border-radius: 3px;
   background: #e6ddd3;
 }
 
 .seat-bottom {
-  margin-top: 18px;
-  padding-top: 15px;
+  margin-top: 16px;
+  padding-top: 13px;
   border-top: 1px solid #eadfd4;
 }
 
 #selectedSeatText {
   color: #663b43;
   font-weight: bold;
-  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  margin: 8px 0 12px;
 }
 
+.seat-bottom button { margin: 3px; }
+
+/* 휴대폰 화면 */
 @media(max-width:600px) {
-  body { padding: 14px 9px; }
-  header { padding: 24px; }
-  section { padding: 15px; }
-  .seat-window { padding: 14px; }
-  .seat-map { justify-content: flex-start; }
+  body { padding: 7px 4px; }
+
+  header {
+    padding: 20px 14px;
+    margin-bottom: 9px;
+  }
+
+  header h1 { font-size: 20px; }
+
+  section {
+    padding: 10px 5px;
+    margin-bottom: 9px;
+    border-radius: 9px;
+  }
+
+  h2 {
+    font-size: 16px;
+    margin-left: 4px;
+  }
+
+  .cast-card { padding: 9px 6px; }
+  .cast-card h3 { font-size: 13px; }
+  .cast-card p { font-size: 12px; }
+
+  .stat { padding: 10px; }
+  .stat strong { font-size: 22px; }
+
+  .actions { gap: 4px; }
+  .actions button { padding: 8px 6px; font-size: 11px; }
+
+  th {
+    font-size: 10px;
+    padding: 6px 1px;
+  }
+
+  td { padding: 5px 1px; }
+
+  td input, td select {
+    font-size: 10px;
+    padding: 5px 1px;
+    border-radius: 4px;
+  }
+
+  td button {
+    font-size: 10px;
+    padding: 6px 2px;
+  }
+
+  td input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* 표의 각 칸 너비 */
+  th:nth-child(1) { width: 19%; }
+  th:nth-child(2) { width: 11%; }
+  th:nth-child(3),
+  th:nth-child(4),
+  th:nth-child(5) { width: 12%; }
+  th:nth-child(6) { width: 7%; }
+  th:nth-child(7) { width: 17%; }
+  th:nth-child(8) { width: 10%; }
+
+  .seat-window { padding: 12px 5px; }
+
+  .seat-map {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .seat-block {
+    width: 100%;
+    max-width: 360px;
+    padding: 10px 4px;
+  }
+
+  .seat-row { gap: 3px; }
+
+  .seat, .seat-gap, .pillar {
+    width: 23px;
+    min-width: 23px;
+    height: 25px;
+  }
+
+  .seat { line-height: 23px; }
+
+  .row-label { width: 20px; }
 }
 </style>
 </head>
@@ -364,7 +510,6 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
 
 </div>
 
-<!-- 좌석 선택 창 -->
 <div class="seat-modal" id="seatModal">
   <div class="seat-window">
     <div class="seat-top">
@@ -383,29 +528,27 @@ td input[type="checkbox"] { width: auto; min-width: auto; }
       <span><span class="legend-square" style="background:#e6ddd3"></span>기둥</span>
     </div>
 
-    <div class="seat-map-scroll">
-      <div class="seat-map">
-        <div class="seat-block">
-          <h3>LEFT BLOCK</h3>
-          <div id="leftSeats"></div>
-        </div>
+    <div class="seat-map">
+      <div class="seat-block">
+        <h3>LEFT BLOCK</h3>
+        <div id="leftSeats"></div>
+      </div>
 
-        <div class="seat-block">
-          <h3>CENTER BLOCK</h3>
-          <div id="centerSeats"></div>
-        </div>
+      <div class="seat-block">
+        <h3>CENTER BLOCK</h3>
+        <div id="centerSeats"></div>
+      </div>
 
-        <div class="seat-block">
-          <h3>RIGHT BLOCK</h3>
-          <div id="rightSeats"></div>
-        </div>
+      <div class="seat-block">
+        <h3>RIGHT BLOCK</h3>
+        <div id="rightSeats"></div>
       </div>
     </div>
 
     <div class="seat-bottom">
       <p>선택한 좌석</p>
       <div id="selectedSeatText">선택한 좌석이 없습니다.</div>
-      <button onclick="clearSeats()" class="secondary">선택 초기화</button>
+      <button class="secondary" onclick="clearSeats()">선택 초기화</button>
       <button onclick="saveSeats()">좌석 저장</button>
     </div>
   </div>
@@ -460,7 +603,6 @@ newSchedule.forEach(item => {
   }
 });
 
-// 기존 기록에 좌석 선택 정보가 없으면 추가
 records.forEach(r => {
   if (!Array.isArray(r.seatSelections)) {
     r.seatSelections = [];
@@ -515,14 +657,13 @@ function render() {
   const filter = document.getElementById("actorFilter").value;
   body.innerHTML = "";
 
+  let shown = 0;
+
   records.forEach((r, i) => {
     const actors = [r.dazai, r.ango, r.shizuko];
     if (filter && !actors.includes(filter)) return;
 
-    const seatCount = (r.seatSelections || []).length;
-    const seatLabel = seatCount
-      ? `${seatCount}석 선택`
-      : "좌석 선택";
+    shown++;
 
     const tr = document.createElement("tr");
 
@@ -533,16 +674,19 @@ function render() {
       <td><select data-field="ango">${makeOptions(cast.ango, r.ango)}</select></td>
       <td><select data-field="shizuko">${makeOptions(cast.shizuko, r.shizuko)}</select></td>
       <td><input type="checkbox" data-field="watched" ${r.watched ? "checked" : ""}></td>
-      <td><button class="seat-button" data-seat="true">${seatLabel}</button></td>
+      <td><button class="seat-button" data-seat="true">좌석 선택</button>
+      <span class="seat-count">${(r.seatSelections || []).length}개 선택</span></td>
       <td><button class="delete" data-delete="true">삭제</button></td>
     `;
 
     tr.querySelectorAll("[data-field]").forEach(input => {
       const field = input.dataset.field;
+
       input.addEventListener("change", () => {
         const value = input.type === "checkbox"
           ? input.checked
           : input.value;
+
         updateRecord(i, field, value);
       });
     });
@@ -557,6 +701,16 @@ function render() {
 
     body.appendChild(tr);
   });
+
+  if (!shown) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 8;
+    td.className = "empty-message";
+    td.textContent = "표시할 공연 일정이 없습니다.";
+    tr.appendChild(td);
+    body.appendChild(tr);
+  }
 
   updateStats();
 }
@@ -621,7 +775,7 @@ function importData(event) {
   reader.readAsText(file);
 }
 
-// 좌석 배치
+/* 좌석 배치 */
 const seatLayout = {
   left: [4,4,4,4,2,3,4,4,4,4,4,4,4,3],
   center: [11,10,11,10,11,10,11,11,11,11,11,11,10,8],
@@ -631,23 +785,46 @@ const seatLayout = {
 let currentRecordIndex = null;
 let temporarySeats = [];
 
-function seatId(block, row, number) {
-  return `${block}-${row}-${number}`;
+function seatId(block, row, localNumber) {
+  return `${block}-${row}-${localNumber}`;
 }
 
-function makeSeat(block, row, number) {
-  const id = seatId(block, row, number);
+/* 같은 열에서 블록을 넘어 번호를 이어 붙임 */
+function globalSeatNumber(block, row, localNumber) {
+  const index = row - 1;
+  let number = localNumber;
+
+  if (block === "center" || block === "right") {
+    number += seatLayout.left[index];
+  }
+
+  if (block === "right") {
+    number += seatLayout.center[index];
+  }
+
+  return number;
+}
+
+function blockName(block) {
+  return {
+    left: "왼쪽",
+    center: "가운데",
+    right: "오른쪽"
+  }[block];
+}
+
+function makeSeat(block, row, localNumber) {
+  const id = seatId(block, row, localNumber);
   const selected = temporarySeats.includes(id);
+  const number = globalSeatNumber(block, row, localNumber);
 
   const button = document.createElement("button");
   button.className = "seat" + (selected ? " selected" : "");
   button.textContent = selected ? "✓" : "";
-  button.title = `${block} ${row}열 ${number}번`;
   button.type = "button";
+  button.title = `${row}열 ${number}번`;
 
-  button.addEventListener("click", () => {
-    toggleSeat(id);
-  });
+  button.addEventListener("click", () => toggleSeat(id));
 
   return button;
 }
@@ -666,25 +843,22 @@ function makeSeatRows(block, targetId) {
     label.textContent = rowNumber;
     row.appendChild(label);
 
-    // 왼쪽 블록 5열과 6열의 기둥 공간
     if (block === "left" && rowNumber === 5) {
-      row.appendChild(makePillar());
-      row.appendChild(makePillar());
+      row.append(makePillar(), makePillar());
     }
 
     if (block === "left" && rowNumber === 6) {
       row.appendChild(makePillar());
     }
 
-    // 가운데 블록 14열은 왼쪽 네 칸을 비워 둠
     if (block === "center" && rowNumber === 14) {
       for (let i = 0; i < 4; i++) {
         row.appendChild(makeGap());
       }
     }
 
-    for (let seatNumber = 1; seatNumber <= count; seatNumber++) {
-      row.appendChild(makeSeat(block, rowNumber, seatNumber));
+    for (let n = 1; n <= count; n++) {
+      row.appendChild(makeSeat(block, rowNumber, n));
     }
 
     target.appendChild(row);
@@ -706,12 +880,12 @@ function makeGap() {
 
 function openSeatMap(index) {
   currentRecordIndex = index;
+  temporarySeats = [...(records[index].seatSelections || [])];
 
-  const record = records[index];
-  temporarySeats = [...(record.seatSelections || [])];
+  const r = records[index];
 
   document.getElementById("seatPerformance").textContent =
-    `${record.date || "날짜 미정"} ${record.time || ""}`;
+    `${r.date || "날짜 미정"} ${r.time || ""}`;
 
   document.getElementById("seatModal").classList.add("open");
 
@@ -745,14 +919,10 @@ function updateSelectedSeatText() {
   }
 
   const names = temporarySeats.map(id => {
-    const [block, row, number] = id.split("-");
-    const blockName = {
-      left: "왼쪽",
-      center: "가운데",
-      right: "오른쪽"
-    }[block];
+    const [block, row, localNumber] = id.split("-");
+    const number = globalSeatNumber(block, Number(row), Number(localNumber));
 
-    return `${blockName} ${row}열 ${number}번`;
+    return `${blockName(block)} ${row}열 ${number}번`;
   });
 
   target.textContent = names.join(" / ");
@@ -773,8 +943,11 @@ function saveSeats() {
 
   records[currentRecordIndex].seatSelections = [...temporarySeats];
 
-  // 기존 좌석 입력 기록도 새 좌석 선택 내용으로 갱신
-  records[currentRecordIndex].seat = temporarySeats.join(", ");
+  records[currentRecordIndex].seat = temporarySeats.map(id => {
+    const [block, row, localNumber] = id.split("-");
+    const number = globalSeatNumber(block, Number(row), Number(localNumber));
+    return `${blockName(block)} ${row}열 ${number}번`;
+  }).join(", ");
 
   save();
   render();
