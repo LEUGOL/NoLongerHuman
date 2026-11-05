@@ -1,1100 +1,425 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NO LONGER HUMAN</title>
-
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  padding: 12px 6px;
-  background: #f4efe7;
-  color: #392e2b;
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-}
-
-header {
-  background: #542f36;
-  color: #fff8ed;
-  padding: 26px 20px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-
-header h1 {
-  margin: 0 0 8px;
-  letter-spacing: 2px;
-  font-size: 24px;
-}
-
-header p { margin: 0; opacity: .85; }
-
-section {
-  background: #fffdf9;
-  border: 1px solid #e5d9cc;
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  color: #663b43;
-  margin: 0 0 12px;
-  font-size: 19px;
-}
-
-.cast-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.cast-card {
-  background: #f7f1e9;
-  padding: 12px;
-  border-radius: 9px;
-}
-
-.cast-card h3 {
-  margin: 0 0 8px;
-  color: #663b43;
-  font-size: 15px;
-}
-
-.cast-card p {
-  margin: 0;
-  line-height: 1.8;
-  font-size: 14px;
-}
-
-.stats {
-  display: flex;
-  gap: 8px;
-}
-
-.stat {
-  flex: 1;
-  background: #f7f1e9;
-  padding: 12px;
-  border-radius: 9px;
-  font-size: 13px;
-}
-
-.stat strong {
-  display: block;
-  font-size: 25px;
-  color: #663b43;
-}
-
-button, select, input {
-  font: inherit;
-  border: 1px solid #d9c9bb;
-  border-radius: 6px;
-  padding: 8px;
-  background: white;
-  color: #392e2b;
-}
-
-button {
-  background: #663b43;
-  color: white;
-  border: 0;
-  cursor: pointer;
-}
-
-button.secondary { background: #8c796e; }
-button.delete { background: #a65b56; }
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.actions button { font-size: 13px; }
-
-#actorFilter {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.table-wrap {
-  width: 100%;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-th, td {
-  padding: 6px 2px;
-  border-bottom: 1px solid #eadfd4;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-th {
-  background: #f3ebe2;
-  color: #663b43;
-  font-size: 12px;
-}
-
-td input, td select {
-  width: 100%;
-  min-width: 0;
-  padding: 6px 2px;
-  font-size: 12px;
-}
-
-td input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-}
-
-td button {
-  font-size: 11px;
-  padding: 7px 4px;
-  white-space: nowrap;
-}
-
-.seat-button { background: #8c796e; }
-.seat-count { display: block; font-size: 10px; margin-top: 3px; }
-
-.empty-message {
-  text-align: center;
-  padding: 25px;
-  color: #8c796e;
-}
-
-/* 날짜 표시 */
-.date-picker-wrap {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  min-height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border: 1px solid #d9c9bb;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.date-label {
-  font-size: 11px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.date-picker-wrap input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* 좌석 선택 창 */
-.seat-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: rgba(30, 20, 20, .7);
-  padding: 8px;
-  overflow-y: auto;
-}
-
-.seat-modal.open {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.seat-window {
-  width: 100%;
-  max-width: 1000px;
-  margin: 8px auto;
-  padding: 16px;
-  background: #fffdf9;
-  border-radius: 12px;
-}
-
-.seat-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.seat-top h2 { margin-bottom: 5px; }
-
-#seatPerformance {
-  font-size: 13px;
-  color: #8c796e;
-}
-
-.stage {
-  margin: 14px auto;
-  padding: 10px;
-  max-width: 400px;
-  text-align: center;
-  color: white;
-  background: #542f36;
-  border-radius: 5px;
-  letter-spacing: 4px;
-}
-
-.seat-legend {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 13px;
-  font-size: 12px;
-}
-
-.legend-square {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #c9b8aa;
-  border-radius: 3px;
-  vertical-align: middle;
-  margin-right: 4px;
-  background: #f7f1e9;
-}
-
-.legend-square.selected { background: #663b43; }
-
-/* 세 블록을 가로로 배치 */
-.seat-map {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 8px;
-  width: 100%;
-}
-
-.seat-block {
-  background: #f7f1e9;
-  padding: 9px 5px;
-  border-radius: 9px;
-  min-width: 0;
-}
-
-.seat-block h3 {
-  text-align: center;
-  margin: 0 0 9px;
-  color: #663b43;
-  font-size: 13px;
-}
-
-.seat-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  min-height: 25px;
-  margin: 3px 0;
-}
-
-.row-label {
-  width: 18px;
-  flex-shrink: 0;
-  text-align: center;
-  color: #8c796e;
-  font-size: 10px;
-}
-
-.seat {
-  width: 22px;
-  height: 23px;
-  min-width: 22px;
-  padding: 0;
-  margin: 0;
-  border: 1px solid #d4c4b7;
-  border-radius: 4px;
-  background: #fffdf9;
-  color: #663b43;
-  font-size: 10px;
-  line-height: 21px;
-  flex-shrink: 0;
-}
-
-.seat.selected {
-  background: #663b43;
-  border-color: #663b43;
-  color: white;
-  font-weight: bold;
-}
-
-.seat-gap, .pillar {
-  width: 22px;
-  height: 23px;
-  flex-shrink: 0;
-}
-
-.pillar {
-  border: 1px dashed #b9a89a;
-  border-radius: 3px;
-  background: #e6ddd3;
-}
-
-.seat-bottom {
-  margin-top: 16px;
-  padding-top: 13px;
-  border-top: 1px solid #eadfd4;
-}
-
-#selectedSeatText {
-  color: #663b43;
-  font-weight: bold;
-  font-size: 13px;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-  margin: 8px 0 12px;
-}
-
-.seat-bottom button { margin: 3px; }
-
-/* 휴대폰 화면 */
-@media(max-width:600px) {
-  body { padding: 4px 2px; }
-
-  header {
-    padding: 17px 12px;
-    margin-bottom: 7px;
-    border-radius: 8px;
-  }
-
-  header h1 { font-size: 18px; }
-  header p { font-size: 12px; }
-
-  section {
-    padding: 8px 4px;
-    margin-bottom: 7px;
-    border-radius: 8px;
-  }
-
-  h2 {
-    font-size: 15px;
-    margin-left: 3px;
-    margin-bottom: 9px;
-  }
-
-  .cast-grid { gap: 4px; }
-  .cast-card { padding: 8px 4px; }
-  .cast-card h3 { font-size: 11px; }
-  .cast-card p { font-size: 11px; line-height: 1.7; }
-
-  .stats { gap: 5px; }
-  .stat { padding: 8px 6px; font-size: 11px; }
-  .stat strong { font-size: 21px; }
-
-  .actions { gap: 3px; }
-  .actions button { padding: 7px 5px; font-size: 10px; }
-
-  th {
-    font-size: 9px;
-    padding: 5px 0;
-  }
-
-  td { padding: 4px 0; }
-
-  td input, td select {
-    font-size: 9px;
-    padding: 4px 0;
-    border-radius: 3px;
-  }
-
-  td button {
-    font-size: 9px;
-    padding: 6px 1px;
-  }
-
-  td input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-  }
-
-  .date-picker-wrap {
-    min-height: 27px;
-  }
-
-  .date-label { font-size: 9px; }
-
-  th:nth-child(1) { width: 17%; }
-  th:nth-child(2) { width: 10%; }
-  th:nth-child(3),
-  th:nth-child(4),
-  th:nth-child(5) { width: 12%; }
-  th:nth-child(6) { width: 7%; }
-  th:nth-child(7) { width: 18%; }
-  th:nth-child(8) { width: 10%; }
-
-  .seat-modal { padding: 3px; }
-
-  .seat-window {
-    padding: 10px 3px;
-    margin: 3px auto;
-    border-radius: 8px;
-  }
-
-  .seat-top { padding: 0 5px; }
-  .seat-top h2 { font-size: 15px; }
-  #seatPerformance { font-size: 11px; }
-  .seat-top button { font-size: 10px; padding: 6px 9px; }
-
-  .stage {
-    margin: 9px auto;
-    padding: 7px;
-    font-size: 11px;
-    max-width: 75%;
-  }
-
-  .seat-legend {
-    gap: 7px;
-    font-size: 10px;
-    margin-bottom: 8px;
-  }
-
-  .legend-square {
-    width: 12px;
-    height: 12px;
-  }
-
-  .seat-map {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 2px;
-    width: 100%;
-  }
-
-  .seat-block {
-    flex: 0 0 auto;
-    padding: 5px 1px;
-    border-radius: 5px;
-  }
-
-  .seat-block h3 {
-    font-size: 9px;
-    margin-bottom: 6px;
-    white-space: nowrap;
-  }
-
-  .seat-row {
-    gap: 1px;
-    min-height: 16px;
-    margin: 2px 0;
-  }
-
-  .row-label {
-    width: 11px;
-    font-size: 8px;
-  }
-
-  .seat {
-    width: 12px;
-    min-width: 12px;
-    height: 15px;
-    font-size: 7px;
-    line-height: 13px;
-    border-radius: 2px;
-    padding: 0;
-  }
-
-  .seat-gap, .pillar {
-    width: 12px;
-    height: 15px;
-  }
-
-  .seat-bottom {
-    margin-top: 10px;
-    padding: 9px 5px 0;
-  }
-
-  .seat-bottom p { font-size: 12px; }
-  #selectedSeatText { font-size: 11px; }
-  .seat-bottom button { font-size: 10px; padding: 7px 9px; }
+*{box-sizing:border-box}
+body{margin:0;padding:12px 8px;background:#f4efe7;color:#392e2b;font-family:Arial,sans-serif}
+.container{width:100%;max-width:1000px;margin:auto}
+header{background:#542f36;color:#fff8ed;padding:24px 20px;border-radius:10px;margin-bottom:10px}
+header h1{margin:0 0 7px;font-size:24px;letter-spacing:2px}
+header p{margin:0;font-size:14px;opacity:.85}
+section{background:#fffdf9;border:1px solid #e5d9cc;border-radius:10px;padding:14px;margin-bottom:10px}
+h2{color:#663b43;margin:0 0 12px;font-size:18px}
+.cast-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cast-card{background:#f7f1e9;padding:11px;border-radius:8px}
+.cast-card h3{margin:0 0 7px;color:#663b43;font-size:14px}
+.cast-card p{margin:0;line-height:1.6;font-size:13px;overflow-wrap:normal}
+.stats{display:flex;gap:8px}
+.stat{flex:1;background:#f7f1e9;padding:11px;border-radius:8px;font-size:12px}
+.stat strong{display:block;font-size:24px;color:#663b43;margin-bottom:2px}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+button,select{font:inherit;border:0;border-radius:6px;padding:8px 10px}
+button{background:#663b43;color:white;cursor:pointer}
+button.secondary{background:#8c796e}
+button.delete{background:#a65b56}
+.actions button{font-size:12px}
+#actorFilter{width:100%;margin-bottom:10px;border:1px solid #d9c9bb;background:#fff}
+.table-wrap{width:100%}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{padding:9px 5px;border-bottom:1px solid #eadfd4;text-align:center;vertical-align:middle}
+th{background:#f3ebe2;color:#663b43;font-size:12px}
+td{font-size:12px;overflow-wrap:anywhere}
+td.cast-cell{text-align:left;line-height:1.65}
+.cast-cell span{display:inline-block;margin-right:7px;white-space:nowrap}
+.cast-role{display:inline-block!important;color:#8c796e;font-size:10px;margin-right:4px}
+.date-main{font-weight:bold;color:#663b43;font-size:13px}
+.time-main{font-variant-numeric:tabular-nums;white-space:nowrap}
+.watched-check{width:19px;height:19px;accent-color:#663b43}
+.seat-button{background:#8c796e;font-size:11px;padding:7px 8px;white-space:nowrap}
+.empty-message{text-align:center;padding:20px;color:#8c796e}
+.seat-record-list{display:grid;gap:7px}
+.seat-record{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px;background:#f7f1e9;border-radius:7px}
+.seat-record-info{min-width:0}
+.seat-record-date{font-weight:bold;color:#663b43;font-size:13px}
+.seat-record-cast{font-size:11px;color:#8c796e;margin-top:3px}
+.seat-record-names{font-size:12px;text-align:right;line-height:1.6;overflow-wrap:anywhere}
+.no-seats{color:#8c796e;font-size:13px;padding:8px 2px}
+.seat-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,20,20,.7);padding:8px;overflow-y:auto}
+.seat-modal.open{display:flex;justify-content:center;align-items:flex-start}
+.seat-window{width:100%;max-width:1000px;margin:8px auto;padding:16px;background:#fffdf9;border-radius:10px}
+.seat-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.seat-top h2{margin-bottom:5px}
+#seatPerformance{font-size:13px;color:#8c796e;margin:0}
+.stage{margin:14px auto;padding:10px;max-width:400px;text-align:center;color:white;background:#542f36;border-radius:5px;letter-spacing:4px}
+.seat-legend{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:13px;font-size:12px}
+.legend-square{display:inline-block;width:15px;height:15px;border:1px solid #c9b8aa;border-radius:3px;vertical-align:middle;margin-right:4px;background:#f7f1e9}
+.legend-square.selected{background:#663b43}
+.seat-map{display:flex;justify-content:center;align-items:flex-start;gap:8px;width:100%}
+.seat-block{background:#f7f1e9;padding:9px 5px;border-radius:8px;min-width:0}
+.seat-block h3{text-align:center;margin:0 0 9px;color:#663b43;font-size:13px}
+.seat-row{display:flex;align-items:center;justify-content:center;gap:2px;min-height:25px;margin:3px 0}
+.row-label{width:18px;flex-shrink:0;text-align:center;color:#8c796e;font-size:10px}
+.seat{width:22px;height:23px;min-width:22px;padding:0;margin:0;border:1px solid #d4c4b7;border-radius:4px;background:#fffdf9;color:#663b43;font-size:10px;line-height:21px;flex-shrink:0}
+.seat.selected{background:#663b43;border-color:#663b43;color:white;font-weight:bold}
+.seat-gap,.pillar{width:22px;height:23px;flex-shrink:0}
+.pillar{border:1px dashed #b9a89a;border-radius:3px;background:#e6ddd3}
+.seat-bottom{margin-top:16px;padding-top:13px;border-top:1px solid #eadfd4}
+#selectedSeatText{color:#663b43;font-weight:bold;font-size:13px;line-height:1.8;overflow-wrap:anywhere;margin:8px 0 12px}
+.seat-bottom button{margin:3px}
+@media(max-width:600px){
+ body{padding:4px 3px}
+ header{padding:16px 12px;margin-bottom:7px;border-radius:8px}
+ header h1{font-size:18px;letter-spacing:1.5px}
+ header p{font-size:11px}
+ section{padding:9px 7px;margin-bottom:7px;border-radius:8px}
+ h2{font-size:15px;margin:0 0 9px}
+ .cast-grid{gap:4px}
+ .cast-card{padding:8px 5px}
+ .cast-card h3{font-size:10px;margin-bottom:5px}
+ .cast-card p{font-size:9px;line-height:1.6;letter-spacing:-.3px}
+ .stats{gap:5px}
+ .stat{padding:8px 7px;font-size:10px}
+ .stat strong{font-size:20px}
+ .actions{gap:4px;margin-bottom:8px}
+ .actions button{font-size:10px;padding:7px 7px}
+ th{font-size:9px;padding:6px 1px}
+ td{font-size:10px;padding:7px 2px}
+ td.cast-cell{font-size:9px;line-height:1.55}
+ .cast-cell span{margin-right:4px}
+ .cast-role{font-size:8px}
+ .date-main{font-size:10px;white-space:nowrap}
+ .time-main{font-size:10px}
+ .watched-check{width:16px;height:16px}
+ .seat-button{font-size:9px;padding:6px 5px}
+ th:nth-child(1){width:19%}
+ th:nth-child(2){width:12%}
+ th:nth-child(3){width:36%}
+ th:nth-child(4){width:8%}
+ th:nth-child(5){width:16%}
+ th:nth-child(6){width:9%}
+ .seat-record{padding:8px;gap:7px}
+ .seat-record-date{font-size:11px}
+ .seat-record-cast{font-size:9px}
+ .seat-record-names{font-size:10px}
+ .seat-modal{padding:3px}
+ .seat-window{padding:10px 3px;margin:3px auto;border-radius:8px}
+ .seat-top{padding:0 5px}
+ .seat-top h2{font-size:15px}
+ #seatPerformance{font-size:10px}
+ .seat-top button{font-size:10px;padding:6px 9px}
+ .stage{margin:9px auto;padding:7px;font-size:11px;max-width:75%}
+ .seat-legend{gap:7px;font-size:10px;margin-bottom:8px}
+ .legend-square{width:12px;height:12px}
+ .seat-map{gap:2px;justify-content:center}
+ .seat-block{flex:0 0 auto;padding:5px 1px;border-radius:5px}
+ .seat-block h3{font-size:9px;margin-bottom:6px;white-space:nowrap}
+ .seat-row{gap:1px;min-height:16px;margin:2px 0}
+ .row-label{width:11px;font-size:8px}
+ .seat{width:12px;min-width:12px;height:15px;font-size:7px;line-height:13px;border-radius:2px;padding:0}
+ .seat-gap,.pillar{width:12px;height:15px}
+ .seat-bottom{margin-top:10px;padding:9px 5px 0}
+ .seat-bottom p{font-size:12px}
+ #selectedSeatText{font-size:11px}
+ .seat-bottom button{font-size:10px;padding:7px 9px}
 }
 </style>
 </head>
-
 <body>
 <div class="container">
-
 <header>
-  <h1>NO LONGER HUMAN</h1>
-  <p>인간실격 · MY THEATRE RECORD</p>
+ <h1>NO LONGER HUMAN</h1>
+ <p>인간실격 · MY THEATRE RECORD</p>
 </header>
 
 <section>
-  <h2>CAST MEMBERS</h2>
-  <div class="cast-grid">
-    <div class="cast-card">
-      <h3>다자이 오사무</h3>
-      <p>안재영<br>박정원<br>정재환</p>
-    </div>
-    <div class="cast-card">
-      <h3>안고</h3>
-      <p>강정우<br>손유동<br>반정모</p>
-    </div>
-    <div class="cast-card">
-      <h3>오타 시즈코</h3>
-      <p>한수야<br>김주연<br>박새힘</p>
-    </div>
-  </div>
+ <h2>CAST MEMBERS</h2>
+ <div class="cast-grid">
+  <div class="cast-card"><h3>다자이 오사무</h3><p>안재영 · 박정원 · 정재환</p></div>
+  <div class="cast-card"><h3>안고</h3><p>강정우 · 손유동 · 반정모</p></div>
+  <div class="cast-card"><h3>오타 시즈코</h3><p>한수야 · 김주연 · 박새힘</p></div>
+ </div>
 </section>
 
 <section>
-  <h2>MY RECORD</h2>
-  <div class="stats">
-    <div class="stat">
-      <strong id="totalCount">0</strong>
-      전체 공연 기록
-    </div>
-    <div class="stat">
-      <strong id="watchedCount">0</strong>
-      나의 관극 횟수
-    </div>
-  </div>
+ <h2>MY RECORD</h2>
+ <div class="stats">
+  <div class="stat"><strong id="totalCount">0</strong>전체 공연 기록</div>
+  <div class="stat"><strong id="watchedCount">0</strong>나의 관극 횟수</div>
+ </div>
 </section>
 
 <section>
-  <h2>PERFORMANCE SCHEDULE</h2>
-
-  <div class="actions">
-    <button onclick="addRow()">+ 일정 추가</button>
-    <button class="secondary" onclick="exportData()">기록 저장</button>
-    <button class="secondary" onclick="document.getElementById('importFile').click()">기록 불러오기</button>
-    <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
-  </div>
-
-  <select id="actorFilter" onchange="render()">
-    <option value="">전체 배우 보기</option>
-  </select>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>날짜</th>
-          <th>시간</th>
-          <th>다자이</th>
-          <th>안고</th>
-          <th>시즈코</th>
-          <th>관극</th>
-          <th>좌석</th>
-          <th>삭제</th>
-        </tr>
-      </thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
-  </div>
+ <h2>PERFORMANCE SCHEDULE</h2>
+ <div class="actions">
+  <button class="secondary" onclick="exportData()">기록 저장</button>
+  <button class="secondary" onclick="document.getElementById('importFile').click()">기록 불러오기</button>
+  <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
+ </div>
+ <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
+ <div class="table-wrap">
+  <table>
+   <thead><tr><th>날짜</th><th>시간</th><th>캐스트</th><th>관극</th><th>좌석</th><th>삭제</th></tr></thead>
+   <tbody id="scheduleBody"></tbody>
+  </table>
+ </div>
 </section>
 
+<section>
+ <h2>MY SEATS</h2>
+ <div id="seatRecordList" class="seat-record-list"></div>
+</section>
 </div>
 
 <div class="seat-modal" id="seatModal">
-  <div class="seat-window">
-    <div class="seat-top">
-      <div>
-        <h2>MY SEAT</h2>
-        <p id="seatPerformance"></p>
-      </div>
-      <button class="secondary" onclick="closeSeatMap()">닫기</button>
-    </div>
-
-    <div class="stage">STAGE</div>
-
-    <div class="seat-legend">
-      <span><span class="legend-square"></span>선택 가능</span>
-      <span><span class="legend-square selected"></span>내 좌석</span>
-      <span><span class="legend-square" style="background:#e6ddd3"></span>기둥</span>
-    </div>
-
-    <div class="seat-map">
-      <div class="seat-block">
-        <h3>LEFT</h3>
-        <div id="leftSeats"></div>
-      </div>
-
-      <div class="seat-block">
-        <h3>CENTER</h3>
-        <div id="centerSeats"></div>
-      </div>
-
-      <div class="seat-block">
-        <h3>RIGHT</h3>
-        <div id="rightSeats"></div>
-      </div>
-    </div>
-
-    <div class="seat-bottom">
-      <p>선택한 좌석</p>
-      <div id="selectedSeatText">선택한 좌석이 없습니다.</div>
-      <button class="secondary" onclick="clearSeats()">선택 초기화</button>
-      <button onclick="saveSeats()">좌석 저장</button>
-    </div>
+ <div class="seat-window">
+  <div class="seat-top">
+   <div><h2>MY SEAT</h2><p id="seatPerformance"></p></div>
+   <button class="secondary" onclick="closeSeatMap()">닫기</button>
   </div>
+  <div class="stage">STAGE</div>
+  <div class="seat-legend">
+   <span><span class="legend-square"></span>선택 가능</span>
+   <span><span class="legend-square selected"></span>내 좌석</span>
+   <span><span class="legend-square" style="background:#e6ddd3"></span>기둥</span>
+  </div>
+  <div class="seat-map">
+   <div class="seat-block"><h3>LEFT</h3><div id="leftSeats"></div></div>
+   <div class="seat-block"><h3>CENTER</h3><div id="centerSeats"></div></div>
+   <div class="seat-block"><h3>RIGHT</h3><div id="rightSeats"></div></div>
+  </div>
+  <div class="seat-bottom">
+   <p>선택한 좌석</p>
+   <div id="selectedSeatText">선택한 좌석이 없습니다.</div>
+   <button class="secondary" onclick="clearSeats()">선택 초기화</button>
+   <button onclick="saveSeats()">좌석 저장</button>
+  </div>
+ </div>
 </div>
 
 <script>
 const cast = {
-  dazai: ["안재영", "박정원", "정재환"],
-  ango: ["강정우", "손유동", "반정모"],
-  shizuko: ["한수야", "김주연", "박새힘"]
+ dazai:["안재영","박정원","정재환"],
+ ango:["강정우","손유동","반정모"],
+ shizuko:["한수야","김주연","박새힘"]
 };
 
-let records = [];
+let records=[];
+try{
+ records=JSON.parse(localStorage.getItem("nlh_records")||"[]");
+ if(!Array.isArray(records)) records=[];
+}catch(e){records=[];}
 
-try {
-  records = JSON.parse(localStorage.getItem("nlh_records") || "[]");
-  if (!Array.isArray(records)) records = [];
-} catch (e) {
-  records = [];
-}
-
-const newSchedule = [
-  {date:"2026-12-11",time:"20:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
-  {date:"2026-12-12",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
-  {date:"2026-12-13",time:"18:00",dazai:"정재환",ango:"반정모",shizuko:"한수야"},
-  {date:"2026-12-15",time:"20:00",dazai:"안재영",ango:"반정모",shizuko:"박새힘"},
-  {date:"2026-12-16",time:"20:00",dazai:"박정원",ango:"손유동",shizuko:"김주연"},
-  {date:"2026-12-17",time:"20:00",dazai:"정재환",ango:"강정우",shizuko:"박새힘"},
-  {date:"2026-12-18",time:"20:00",dazai:"박정원",ango:"반정모",shizuko:"한수야"},
-  {date:"2026-12-19",time:"15:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
-  {date:"2026-12-19",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
-  {date:"2026-12-20",time:"14:00",dazai:"정재환",ango:"반정모",shizuko:"김주연"},
-  {date:"2026-12-20",time:"18:00",dazai:"안재영",ango:"강정우",shizuko:"한수야"}
+const newSchedule=[
+ {date:"2026-12-11",time:"20:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
+ {date:"2026-12-12",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
+ {date:"2026-12-13",time:"18:00",dazai:"정재환",ango:"반정모",shizuko:"한수야"},
+ {date:"2026-12-15",time:"20:00",dazai:"안재영",ango:"반정모",shizuko:"박새힘"},
+ {date:"2026-12-16",time:"20:00",dazai:"박정원",ango:"손유동",shizuko:"김주연"},
+ {date:"2026-12-17",time:"20:00",dazai:"정재환",ango:"강정우",shizuko:"박새힘"},
+ {date:"2026-12-18",time:"20:00",dazai:"박정원",ango:"반정모",shizuko:"한수야"},
+ {date:"2026-12-19",time:"15:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
+ {date:"2026-12-19",time:"19:00",dazai:"박정원",ango:"손유동",shizuko:"박새힘"},
+ {date:"2026-12-20",time:"14:00",dazai:"정재환",ango:"반정모",shizuko:"김주연"},
+ {date:"2026-12-20",time:"18:00",dazai:"안재영",ango:"강정우",shizuko:"한수야"}
 ];
 
-newSchedule.forEach(item => {
-  const existing = records.find(
-    r => r.date === item.date && r.time === item.time
-  );
-
-  if (existing) {
-    ["dazai", "ango", "shizuko"].forEach(key => {
-      if (!existing[key]) existing[key] = item[key];
-    });
-  } else {
-    records.push({
-      ...item,
-      watched: false,
-      seat: "",
-      seatSelections: []
-    });
-  }
+newSchedule.forEach(item=>{
+ const existing=records.find(r=>r.date===item.date&&r.time===item.time);
+ if(existing){
+  ["dazai","ango","shizuko"].forEach(key=>{if(!existing[key])existing[key]=item[key];});
+ }else{
+  records.push({...item,watched:false,seat:"",seatSelections:[]});
+ }
 });
+records.forEach(r=>{if(!Array.isArray(r.seatSelections))r.seatSelections=[];});
+localStorage.setItem("nlh_records",JSON.stringify(records));
 
-records.forEach(r => {
-  if (!Array.isArray(r.seatSelections)) {
-    r.seatSelections = [];
-  }
-});
-
-localStorage.setItem("nlh_records", JSON.stringify(records));
-
-function save() {
-  localStorage.setItem("nlh_records", JSON.stringify(records));
-  updateStats();
+function save(){
+ localStorage.setItem("nlh_records",JSON.stringify(records));
+ updateStats();
 }
-
-function formatDate(dateString) {
-  if (!dateString) return "날짜 선택";
-
-  const parts = dateString.split("-");
-  if (parts.length !== 3) return dateString;
-
-  const date = new Date(
-    Number(parts[0]),
-    Number(parts[1]) - 1,
-    Number(parts[2])
-  );
-
-  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-
-  return `${Number(parts[1])}.${Number(parts[2])} (${weekdays[date.getDay()]})`;
+function formatDate(value){
+ if(!value)return "날짜 미정";
+ const p=value.split("-");
+ if(p.length!==3)return value;
+ const d=new Date(Number(p[0]),Number(p[1])-1,Number(p[2]));
+ return `${Number(p[1])}.${Number(p[2])} (${["일","월","화","수","목","금","토"][d.getDay()]})`;
 }
-
-function makeOptions(list, selected) {
-  return '<option value="">선택</option>' +
-    list.map(name =>
-      `<option value="${name}" ${selected === name ? "selected" : ""}>${name}</option>`
-    ).join("");
+function blockName(block){return {left:"왼쪽",center:"가운데",right:"오른쪽"}[block];}
+function seatLayoutValue(block,row,local){
+ const index=row-1;
+ let n=local;
+ if(block==="center"||block==="right")n+=seatLayout.left[index];
+ if(block==="right")n+=seatLayout.center[index];
+ return n;
 }
-
-function addRow() {
-  records.push({
-    date: "",
-    time: "",
-    dazai: "",
-    ango: "",
-    shizuko: "",
-    watched: false,
-    seat: "",
-    seatSelections: []
-  });
-
-  save();
-  render();
+function seatDescription(id){
+ const [block,row,local]=id.split("-");
+ return `${blockName(block)} ${row}열 ${seatLayoutValue(block,Number(row),Number(local))}번`;
 }
-
-function updateRecord(index, field, value) {
-  if (!records[index]) return;
-  records[index][field] = value;
-  save();
+function render(){
+ const body=document.getElementById("scheduleBody");
+ const filter=document.getElementById("actorFilter").value;
+ body.innerHTML="";
+ let shown=0;
+ records.forEach((r,i)=>{
+  const actors=[r.dazai,r.ango,r.shizuko];
+  if(filter&&!actors.includes(filter))return;
+  shown++;
+  const tr=document.createElement("tr");
+  const date=document.createElement("td");
+  date.innerHTML=`<span class="date-main">${formatDate(r.date)}</span>`;
+  const time=document.createElement("td");
+  time.innerHTML=`<span class="time-main">${r.time||"-"}</span>`;
+  const castCell=document.createElement("td");
+  castCell.className="cast-cell";
+  castCell.innerHTML=`<span><i class="cast-role">다자이</i>${r.dazai||"-"}</span><span><i class="cast-role">안고</i>${r.ango||"-"}</span><span><i class="cast-role">시즈코</i>${r.shizuko||"-"}</span>`;
+  const watched=document.createElement("td");
+  const check=document.createElement("input");
+  check.type="checkbox";check.className="watched-check";check.checked=!!r.watched;
+  check.setAttribute("aria-label","관극 여부");
+  check.addEventListener("change",()=>{records[i].watched=check.checked;save();});
+  watched.appendChild(check);
+  const seat=document.createElement("td");
+  const seatButton=document.createElement("button");
+  seatButton.className="seat-button";seatButton.textContent="좌석 선택";
+  seatButton.addEventListener("click",()=>openSeatMap(i));
+  seat.appendChild(seatButton);
+  const del=document.createElement("td");
+  const delButton=document.createElement("button");
+  delButton.className="delete";delButton.textContent="삭제";
+  delButton.addEventListener("click",()=>deleteRow(i));
+  del.appendChild(delButton);
+  [date,time,castCell,watched,seat,del].forEach(td=>tr.appendChild(td));
+  body.appendChild(tr);
+ });
+ if(!shown){
+  const tr=document.createElement("tr"),td=document.createElement("td");
+  td.colSpan=6;td.className="empty-message";td.textContent="표시할 공연 일정이 없습니다.";
+  tr.appendChild(td);body.appendChild(tr);
+ }
+ updateStats();
+ renderSeatRecords();
 }
-
-function deleteRow(index) {
-  if (!confirm("이 일정을 삭제할까요?")) return;
-  records.splice(index, 1);
-  save();
-  render();
+function updateStats(){
+ document.getElementById("totalCount").textContent=records.length;
+ document.getElementById("watchedCount").textContent=records.filter(r=>r.watched).length;
 }
-
-function render() {
-  const body = document.getElementById("scheduleBody");
-  const filter = document.getElementById("actorFilter").value;
-  body.innerHTML = "";
-
-  let shown = 0;
-
-  records.forEach((r, i) => {
-    const actors = [r.dazai, r.ango, r.shizuko];
-    if (filter && !actors.includes(filter)) return;
-
-    shown++;
-
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>
-        <div class="date-picker-wrap">
-          <span class="date-label">${formatDate(r.date)}</span>
-          <input type="date" value="${r.date || ""}" data-field="date" aria-label="공연 날짜">
-        </div>
-      </td>
-      <td><input type="time" value="${r.time || ""}" data-field="time"></td>
-      <td><select data-field="dazai">${makeOptions(cast.dazai, r.dazai)}</select></td>
-      <td><select data-field="ango">${makeOptions(cast.ango, r.ango)}</select></td>
-      <td><select data-field="shizuko">${makeOptions(cast.shizuko, r.shizuko)}</select></td>
-      <td><input type="checkbox" data-field="watched" ${r.watched ? "checked" : ""}></td>
-      <td>
-        <button class="seat-button" data-seat="true">좌석 선택</button>
-        <span class="seat-count">${(r.seatSelections || []).length}개 선택</span>
-      </td>
-      <td><button class="delete" data-delete="true">삭제</button></td>
-    `;
-
-    tr.querySelectorAll("[data-field]").forEach(input => {
-      const field = input.dataset.field;
-
-      input.addEventListener("change", () => {
-        const value = input.type === "checkbox"
-          ? input.checked
-          : input.value;
-
-        updateRecord(i, field, value);
-
-        if (field === "date") {
-          tr.querySelector(".date-label").textContent = formatDate(value);
-        }
-      });
-    });
-
-    tr.querySelector("[data-seat]").addEventListener("click", () => {
-      openSeatMap(i);
-    });
-
-    tr.querySelector("[data-delete]").addEventListener("click", () => {
-      deleteRow(i);
-    });
-
-    body.appendChild(tr);
-  });
-
-  if (!shown) {
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 8;
-    td.className = "empty-message";
-    td.textContent = "표시할 공연 일정이 없습니다.";
-    tr.appendChild(td);
-    body.appendChild(tr);
-  }
-
-  updateStats();
+function setupFilter(){
+ const select=document.getElementById("actorFilter");
+ const names=[...cast.dazai,...cast.ango,...cast.shizuko];
+ select.innerHTML='<option value="">전체 배우 보기</option>'+names.map(n=>`<option value="${n}">${n}</option>`).join("");
 }
-
-function updateStats() {
-  document.getElementById("totalCount").textContent = records.length;
-  document.getElementById("watchedCount").textContent =
-    records.filter(r => r.watched).length;
+function renderSeatRecords(){
+ const target=document.getElementById("seatRecordList");
+ target.innerHTML="";
+ const saved=records.map((r,index)=>({r,index})).filter(x=>x.r.seatSelections&&x.r.seatSelections.length);
+ if(!saved.length){
+  target.innerHTML='<div class="no-seats">아직 저장한 좌석이 없습니다.</div>';
+  return;
+ }
+ saved.forEach(({r})=>{
+  const item=document.createElement("div");item.className="seat-record";
+  const info=document.createElement("div");info.className="seat-record-info";
+  const date=document.createElement("div");date.className="seat-record-date";
+  date.textContent=`${formatDate(r.date)} ${r.time||""}`;
+  const actors=document.createElement("div");actors.className="seat-record-cast";
+  actors.textContent=`${r.dazai||""} · ${r.ango||""} · ${r.shizuko||""}`;
+  info.append(date,actors);
+  const names=document.createElement("div");names.className="seat-record-names";
+  names.textContent=r.seatSelections.map(seatDescription).join(" / ");
+  item.append(info,names);target.appendChild(item);
+ });
 }
-
-function setupFilter() {
-  const select = document.getElementById("actorFilter");
-  const names = [...cast.dazai, ...cast.ango, ...cast.shizuko];
-
-  select.innerHTML = '<option value="">전체 배우 보기</option>' +
-    names.map(name => `<option value="${name}">${name}</option>`).join("");
+function deleteRow(index){
+ if(!confirm("이 일정을 삭제할까요?"))return;
+ records.splice(index,1);save();render();
 }
-
-function exportData() {
-  const blob = new Blob(
-    [JSON.stringify(records, null, 2)],
-    { type: "application/json" }
-  );
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "no-longer-human-records.json";
-  a.click();
-  URL.revokeObjectURL(url);
+function exportData(){
+ const blob=new Blob([JSON.stringify(records,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="no-longer-human-records.json";a.click();
+ URL.revokeObjectURL(url);
 }
-
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    try {
-      const data = JSON.parse(reader.result);
-      if (!Array.isArray(data)) throw new Error();
-
-      records = data;
-
-      records.forEach(r => {
-        if (!Array.isArray(r.seatSelections)) {
-          r.seatSelections = [];
-        }
-      });
-
-      save();
-      render();
-      alert("기록을 불러왔습니다.");
-    } catch {
-      alert("올바른 기록 파일이 아닙니다.");
-    }
-
-    event.target.value = "";
-  };
-
-  reader.readAsText(file);
+function importData(event){
+ const file=event.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const data=JSON.parse(reader.result);if(!Array.isArray(data))throw new Error();
+   records=data;records.forEach(r=>{if(!Array.isArray(r.seatSelections))r.seatSelections=[];});
+   save();render();alert("기록을 불러왔습니다.");
+  }catch(e){alert("올바른 기록 파일이 아닙니다.");}
+  event.target.value="";
+ };
+ reader.readAsText(file);
 }
 
 /* 좌석 배치 */
-const seatLayout = {
-  left: [4,4,4,4,2,3,4,4,4,4,4,4,4,3],
-  center: [11,10,11,10,11,10,11,11,11,11,11,11,10,8],
-  right: [4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+const seatLayout={
+ left:[4,4,4,4,2,3,4,4,4,4,4,4,4,3],
+ center:[11,10,11,10,11,10,11,11,11,11,11,11,10,8],
+ right:[4,4,4,4,4,4,4,4,4,4,4,4,4,4]
 };
-
-let currentRecordIndex = null;
-let temporarySeats = [];
-
-function seatId(block, row, localNumber) {
-  return `${block}-${row}-${localNumber}`;
+let currentRecordIndex=null;
+let temporarySeats=[];
+function seatId(block,row,local){return `${block}-${row}-${local}`;}
+function globalSeatNumber(block,row,local){return seatLayoutValue(block,row,local);}
+function makeSeat(block,row,local){
+ const id=seatId(block,row,local),selected=temporarySeats.includes(id);
+ const b=document.createElement("button");
+ b.className="seat"+(selected?" selected":"");
+ b.textContent=selected?"✓":globalSeatNumber(block,row,local);
+ b.type="button";b.title=`${row}열 ${globalSeatNumber(block,row,local)}번`;
+ b.addEventListener("click",()=>toggleSeat(id));
+ return b;
 }
-
-/* 같은 열에서 블록을 넘어 번호를 이어 붙임 */
-function globalSeatNumber(block, row, localNumber) {
-  const index = row - 1;
-  let number = localNumber;
-
-  if (block === "center" || block === "right") {
-    number += seatLayout.left[index];
-  }
-
-  if (block === "right") {
-    number += seatLayout.center[index];
-  }
-
-  return number;
+function makeSeatRows(block,targetId){
+ const target=document.getElementById(targetId);target.innerHTML="";
+ seatLayout[block].forEach((count,index)=>{
+  const rowNumber=index+1,row=document.createElement("div");row.className="seat-row";
+  const label=document.createElement("span");label.className="row-label";label.textContent=rowNumber;row.appendChild(label);
+  if(block==="left"&&rowNumber===5)row.append(makePillar(),makePillar());
+  if(block==="left"&&rowNumber===6)row.appendChild(makePillar());
+  if(block==="center"&&rowNumber===14)for(let i=0;i<4;i++)row.appendChild(makeGap());
+  for(let n=1;n<=count;n++)row.appendChild(makeSeat(block,rowNumber,n));
+  target.appendChild(row);
+ });
 }
-
-function blockName(block) {
-  return {
-    left: "왼쪽",
-    center: "가운데",
-    right: "오른쪽"
-  }[block];
+function makePillar(){const p=document.createElement("span");p.className="pillar";p.title="기둥";return p;}
+function makeGap(){const g=document.createElement("span");g.className="seat-gap";return g;}
+function openSeatMap(index){
+ currentRecordIndex=index;temporarySeats=[...(records[index].seatSelections||[])];
+ const r=records[index];
+ document.getElementById("seatPerformance").textContent=`${formatDate(r.date)} ${r.time||""}`;
+ document.getElementById("seatModal").classList.add("open");
+ makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");
+ updateSelectedSeatText();
 }
-
-function makeSeat(block, row, localNumber) {
-  const id = seatId(block, row, localNumber);
-  const selected = temporarySeats.includes(id);
-  const number = globalSeatNumber(block, row, localNumber);
-
-  const button = document.createElement("button");
-  button.className = "seat" + (selected ? " selected" : "");
-  button.textContent = selected ? "✓" : number;
-  button.type = "button";
-  button.title = `${row}열 ${number}번`;
-
-  button.addEventListener("click", () => toggleSeat(id));
-
-  return button;
+function toggleSeat(id){
+ temporarySeats=temporarySeats.includes(id)?temporarySeats.filter(x=>x!==id):[...temporarySeats,id];
+ makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");
+ updateSelectedSeatText();
 }
-
-function makeSeatRows(block, targetId) {
-  const target = document.getElementById(targetId);
-  target.innerHTML = "";
-
-  seatLayout[block].forEach((count, index) => {
-    const rowNumber = index + 1;
-    const row = document.createElement("div");
-    row.className = "seat-row";
-
-    const label = document.createElement("span");
-    label.className = "row-label";
-    label.textContent = rowNumber;
-    row.appendChild(label);
-
-    if (block === "left" && rowNumber === 5) {
-      row.append(makePillar(), makePillar());
-    }
-
-    if (block === "left" && rowNumber === 6) {
-      row.appendChild(makePillar());
-    }
-
-    if (block === "center" && rowNumber === 14) {
-      for (let i = 0; i < 4; i++) {
-        row.appendChild(makeGap());
-      }
-    }
-
-    for (let n = 1; n <= count; n++) {
-      row.appendChild(makeSeat(block, rowNumber, n));
-    }
-
-    target.appendChild(row);
-  });
+function updateSelectedSeatText(){
+ const target=document.getElementById("selectedSeatText");
+ target.textContent=temporarySeats.length?temporarySeats.map(seatDescription).join(" / "):"선택한 좌석이 없습니다.";
 }
-
-function makePillar() {
-  const pillar = document.createElement("span");
-  pillar.className = "pillar";
-  pillar.title = "기둥";
-  return pillar;
+function clearSeats(){
+ temporarySeats=[];makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");updateSelectedSeatText();
 }
-
-function makeGap() {
-  const gap = document.createElement("span");
-  gap.className = "seat-gap";
-  return gap;
+function saveSeats(){
+ if(currentRecordIndex===null)return;
+ records[currentRecordIndex].seatSelections=[...temporarySeats];
+ records[currentRecordIndex].seat=temporarySeats.map(seatDescription).join(", ");
+ save();render();closeSeatMap();
 }
-
-function openSeatMap(index) {
-  currentRecordIndex = index;
-
-  /* 좌석은 공연별로 따로 불러옴 */
-  temporarySeats = [...(records[index].seatSelections || [])];
-
-  const r = records[index];
-
-  document.getElementById("seatPerformance").textContent =
-    `${r.date ? formatDate(r.date) : "날짜 미정"} ${r.time || ""}`;
-
-  document.getElementById("seatModal").classList.add("open");
-
-  makeSeatRows("left", "leftSeats");
-  makeSeatRows("center", "centerSeats");
-  makeSeatRows("right", "rightSeats");
-
-  updateSelectedSeatText();
-}
-
-function toggleSeat(id) {
-  if (temporarySeats.includes(id)) {
-    temporarySeats = temporarySeats.filter(seat => seat !== id);
-  } else {
-    temporarySeats.push(id);
-  }
-
-  makeSeatRows("left", "leftSeats");
-  makeSeatRows("center", "centerSeats");
-  makeSeatRows("right", "rightSeats");
-
-  updateSelectedSeatText();
-}
-
-function updateSelectedSeatText() {
-  const target = document.getElementById("selectedSeatText");
-
-  if (!temporarySeats.length) {
-    target.textContent = "선택한 좌석이 없습니다.";
-    return;
-  }
-
-  const names = temporarySeats.map(id => {
-    const [block, row, localNumber] = id.split("-");
-    const number = globalSeatNumber(block, Number(row), Number(localNumber));
-
-    return `${blockName(block)} ${row}열 ${number}번`;
-  });
-
-  target.textContent = names.join(" / ");
-}
-
-function clearSeats() {
-  temporarySeats = [];
-
-  makeSeatRows("left", "leftSeats");
-  makeSeatRows("center", "centerSeats");
-  makeSeatRows("right", "rightSeats");
-
-  updateSelectedSeatText();
-}
-
-function saveSeats() {
-  if (currentRecordIndex === null) return;
-
-  records[currentRecordIndex].seatSelections = [...temporarySeats];
-
-  records[currentRecordIndex].seat = temporarySeats.map(id => {
-    const [block, row, localNumber] = id.split("-");
-    const number = globalSeatNumber(block, Number(row), Number(localNumber));
-    return `${blockName(block)} ${row}열 ${number}번`;
-  }).join(", ");
-
-  save();
-  render();
-  closeSeatMap();
-}
-
-function closeSeatMap() {
-  document.getElementById("seatModal").classList.remove("open");
-  currentRecordIndex = null;
-}
-
+function closeSeatMap(){document.getElementById("seatModal").classList.remove("open");currentRecordIndex=null;}
 setupFilter();
 render();
 </script>
-
 </body>
 </html>
