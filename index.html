@@ -544,13 +544,13 @@ function render(){
   time.innerHTML=`<span class="time-main">${r.time||"-"}</span>`;
 
   const dazai=document.createElement("td");
-dazai.textContent=r.dazai||"-";
+  dazai.textContent=r.dazai||"-";
 
-const ango=document.createElement("td");
-ango.textContent=r.ango||"-";
+  const ango=document.createElement("td");
+  ango.textContent=r.ango||"-";
 
-const shizuko=document.createElement("td");
-shizuko.textContent=r.shizuko||"-";
+  const shizuko=document.createElement("td");
+  shizuko.textContent=r.shizuko||"-";
 
   const watched=document.createElement("td");
   const check=document.createElement("input");
@@ -571,14 +571,16 @@ shizuko.textContent=r.shizuko||"-";
   seatButton.addEventListener("click",()=>openSeatMap(i));
   seat.appendChild(seatButton);
 
-  [date,time,castCell,watched,seat].forEach(td=>tr.appendChild(td));
+  [date,time,dazai,ango,shizuko,watched,seat]
+   .forEach(td=>tr.appendChild(td));
+
   body.appendChild(tr);
  });
 
  if(!shown){
   const tr=document.createElement("tr");
   const td=document.createElement("td");
-  td.colSpan=5;
+  td.colSpan=7;
   td.className="empty-message";
   td.textContent="표시할 공연 일정이 없습니다.";
   tr.appendChild(td);
