@@ -7,7 +7,7 @@
   "theme_color": "#542f36",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "no_longer_human_icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
