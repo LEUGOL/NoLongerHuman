@@ -248,6 +248,91 @@ td.cast-cell{text-align:left;line-height:1.65}
  .actor-count-person{font-size:9px;padding:5px 0}
  .actor-count-number{font-size:9px}
 }
+ 
+/* DEEP WINE + INK + NAVY THEME */
+body{background:#F5ECE7;color:#38272A}
+header{background:#401E29;color:#F5ECE7}
+section,.seat-window{background:#FFF9F5;border-color:#DCCBC6}
+h2,.cast-card h3,.stat strong,.date-main,
+.seat-record-date,.mini-seat-block h4,.seat-block h3,
+#selectedSeatText,.actor-count-card h3,.actor-count-number{
+ color:#401E29
+}
+.cast-card,.stat,.mini-seat-block,.seat-block{
+ background:#F0E3DF
+}
+button{background:#A52C3B;color:white}
+button.secondary,.seat-button{background:#273544;color:white}
+#actorFilter{border-color:#DCCBC6;background:#FFF9F5;color:#38272A}
+th{background:#E9D6D0;color:#401E29}
+th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
+.cast-role,.seat-record-cast,.no-seats,.mini-row-label,
+.mini-legend,.row-label,#seatPerformance,.empty-message{
+ color:#987B78
+}
+.watched-check{accent-color:#A52C3B}
+.mini-stage,.stage{background:#273544;color:white}
+.mini-seat,.seat{
+ background:#FFF9F5;color:#401E29;border-color:#CDBBB7
+}
+.mini-seat.selected,.seat.selected,.legend-square.selected,
+.mini-legend-mark{
+ background:#A52C3B;border-color:#A52C3B;color:white
+}
+.mini-pillar,.pillar{
+ background:#D8D0CE;border-color:#AFA2A1
+}
+.seat-modal{background:rgba(22,17,25,.75)}
+.legend-square[style]{background:#D8D0CE!important}
+
+/* MY NOTES */
+.notes-intro{
+ color:#987B78;font-size:12px;line-height:1.6;margin:0 0 14px
+}
+.notes-editor{
+ background:#F5ECE7;border:1px solid #DCCBC6;
+ border-radius:8px;padding:12px;margin-bottom:16px
+}
+.notes-editor label{
+ display:block;color:#401E29;font-size:12px;
+ font-weight:bold;margin:12px 0 6px
+}
+.notes-editor label:first-child{margin-top:0}
+.notes-editor select,.notes-editor textarea{
+ width:100%;border:1px solid #DCCBC6;
+ border-radius:6px;background:#FFF9F5;color:#38272A;
+ padding:10px;font:inherit;font-size:13px
+}
+.notes-editor textarea{
+ resize:vertical;line-height:1.7;min-height:75px
+}
+.notes-editor textarea:focus,.notes-editor select:focus{
+ outline:2px solid #A52C3B;outline-offset:1px
+}
+.notes-save{
+ width:100%;margin-top:12px;padding:10px;
+ background:#401E29;color:white
+}
+.notes-list{display:grid;gap:10px}
+.note-card{
+ background:#FFF9F5;border:1px solid #DCCBC6;
+ border-radius:8px;padding:12px
+}
+.note-date{font-size:12px;color:#987B78;margin-bottom:5px}
+.note-title{font-size:14px;font-weight:bold;color:#401E29}
+.note-cast{font-size:11px;color:#987B78;margin-top:5px}
+.note-content{
+ font-size:13px;line-height:1.8;white-space:pre-wrap;
+ overflow-wrap:anywhere;margin-top:10px
+}
+.note-label{font-size:11px;font-weight:bold;color:#A52C3B;margin-top:10px}
+.note-actions{display:flex;gap:6px;margin-top:12px}
+.note-actions button{font-size:11px;padding:7px 12px}
+.note-empty{
+ color:#987B78;text-align:center;padding:18px 5px;
+ font-size:12px;line-height:1.7
+}
+
 </style>
 </head>
 <body>
@@ -297,6 +382,31 @@ td.cast-cell{text-align:left;line-height:1.65}
  <h2>MY SEATS</h2>
  <div id="seatRecordList" class="seat-record-list"></div>
 </section>
+ 
+<section>
+ <h2>MY NOTES</h2>
+ <p class="notes-intro">
+  공연이 끝난 뒤, 오래 기억하고 싶은 순간들을 기록하는 나만의 공간
+ </p>
+
+ <div class="notes-editor">
+  <label for="notePerformance">관람한 공연</label>
+  <select id="notePerformance" onchange="loadNoteForPerformance()">
+   <option value="">관극한 공연을 선택해 주세요.</option>
+  </select>
+
+  <label for="noteScene">기억하고 싶은 장면</label>
+  <textarea id="noteScene" placeholder="오늘 가장 기억에 남았던 장면은?"></textarea>
+
+  <label for="noteMemo">오늘의 감상</label>
+  <textarea id="noteMemo" rows="5" placeholder="배우의 표정, 대사, 무대, 감정 등 자유롭게 기록해 보세요."></textarea>
+
+  <button class="notes-save" onclick="saveNote()">감상 기록 저장</button>
+ </div>
+
+ <div id="noteList" class="notes-list"></div>
+</section>
+
 </div>
 
 <div class="seat-modal" id="seatModal">
@@ -336,6 +446,13 @@ try{
  records=JSON.parse(localStorage.getItem("nlh_records")||"[]");
  if(!Array.isArray(records))records=[];
 }catch(e){records=[];}
+ 
+let notes=[];
+try{
+ notes=JSON.parse(localStorage.getItem("nlh_notes")||"[]");
+ if(!Array.isArray(notes))notes=[];
+}catch(e){notes=[];}
+
 
 const newSchedule=[
  {date:"2026-12-11",time:"20:00",dazai:"안재영",ango:"강정우",shizuko:"김주연"},
@@ -754,8 +871,21 @@ function closeSeatMap(){
 }
 
 /* 기록 저장 및 불러오기 */
+
+/* 기록 저장 및 불러오기 */
+
 function exportData(){
- const blob=new Blob([JSON.stringify(records,null,2)],{type:"application/json"});
+ const payload={
+  version:2,
+  records:records,
+  notes:notes
+ };
+
+ const blob=new Blob(
+  [JSON.stringify(payload,null,2)],
+  {type:"application/json"}
+ );
+
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
  a.href=url;
@@ -773,16 +903,28 @@ function importData(event){
  reader.onload=()=>{
   try{
    const data=JSON.parse(reader.result);
-   if(!Array.isArray(data))throw new Error();
 
-   records=data;
+   if(Array.isArray(data)){
+    records=data;
+    notes=[];
+   }else if(data&&Array.isArray(data.records)){
+    records=data.records;
+    notes=Array.isArray(data.notes)?data.notes:[];
+   }else{
+    throw new Error();
+   }
+
    records.forEach(r=>{
-    if(!Array.isArray(r.seatSelections))r.seatSelections=[];
+    if(!Array.isArray(r.seatSelections)){
+     r.seatSelections=[];
+    }
    });
+
+   localStorage.setItem("nlh_notes",JSON.stringify(notes));
 
    save();
    render();
-   alert("기록을 불러왔습니다.");
+   alert("공연 기록과 감상 기록을 불러왔습니다.");
   }catch(e){
    alert("올바른 기록 파일이 아닙니다.");
   }
@@ -792,6 +934,7 @@ function importData(event){
 
  reader.readAsText(file);
 }
+
 
 /* 시작 */
 localStorage.setItem("nlh_records",JSON.stringify(records));
