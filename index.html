@@ -7,52 +7,52 @@
  <link rel="icon" type="image/png" href="no_longer_human_icon.png">
 <link rel="apple-touch-icon" href="no_longer_human_icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#542f36">
+<meta name="theme-color" content="#401E29">
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:12px 8px;background:#f4efe7;color:#392e2b;font-family:Arial,sans-serif}
+body{margin:0;padding:12px 8px;background:#F5ECE7;color:#38272A;font-family:Arial,sans-serif}
 .container{width:100%;max-width:1000px;margin:auto}
-header{background:#542f36;color:#fff8ed;padding:24px 20px;border-radius:10px;margin-bottom:10px}
+header{background:#401E29;color:#F5ECE7;padding:24px 20px;border-radius:10px;margin-bottom:10px}
 header h1{margin:0 0 7px;font-size:24px;letter-spacing:2px}
 header p{margin:0;font-size:14px;opacity:.85}
-section{background:#fffdf9;border:1px solid #e5d9cc;border-radius:10px;padding:14px;margin-bottom:10px}
-h2{color:#663b43;margin:0 0 12px;font-size:18px}
+section{background:#FFF9F6;border:1px solid #E2D3CE;border-radius:10px;padding:14px;margin-bottom:10px}
+h2{color:#762D3C;margin:0 0 12px;font-size:18px}
 .cast-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.cast-card{background:#f7f1e9;padding:11px;border-radius:8px}
-.cast-card h3{margin:0 0 7px;color:#663b43;font-size:14px}
+.cast-card{background:#E9D6D0;padding:11px;border-radius:8px}
+.cast-card h3{margin:0 0 7px;color:#401E29;font-size:14px}
 .cast-card p{margin:0;line-height:1.6;font-size:13px;white-space:nowrap}
 .stats{display:flex;gap:8px}
-.stat{flex:1;background:#f7f1e9;padding:11px;border-radius:8px;font-size:12px}
-.stat strong{display:block;font-size:24px;color:#663b43;margin-bottom:2px}
+.stat{flex:1;background:#E9D6D0;padding:11px;border-radius:8px;font-size:12px}
+.stat strong{display:block;font-size:24px;color:#762D3C;margin-bottom:2px}
 .actions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 button,select{font:inherit;border:0;border-radius:6px;padding:8px 10px}
-button{background:#663b43;color:white;cursor:pointer}
-button.secondary{background:#8c796e}
+button{background:#A52C3B;color:white;cursor:pointer}
+button.secondary{background:#273544}
 .actions button{font-size:12px}
-#actorFilter{width:100%;margin-bottom:10px;border:1px solid #d9c9bb;background:#fff}
+#actorFilter{width:100%;margin-bottom:10px;border:1px solid #D8C5C0;background:#FFF9F6;color:#38272A}
 .table-wrap{width:100%}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
-th,td{padding:9px 5px;border-bottom:1px solid #eadfd4;text-align:center;vertical-align:middle}
-th{background:#f3ebe2;color:#663b43;font-size:12px}
+th,td{padding:9px 5px;border-bottom:1px solid #E2D3CE;text-align:center;vertical-align:middle}
+th{background:#E9D6D0;color:#401E29;font-size:12px}
 td{font-size:12px;overflow-wrap:anywhere}
 td.cast-cell{text-align:left;line-height:1.65}
 .cast-cell span{display:inline-block;margin-right:7px;white-space:nowrap}
-.cast-role{display:inline-block!important;color:#8c796e;font-size:10px;margin-right:4px}
-.date-main{font-weight:bold;color:#663b43;font-size:13px}
+.cast-role{display:inline-block!important;color:#987B78;font-size:10px;margin-right:4px}
+.date-main{font-weight:bold;color:#762D3C;font-size:13px}
 .time-main{font-variant-numeric:tabular-nums;white-space:nowrap}
-.watched-check{width:19px;height:19px;accent-color:#663b43}
-.seat-button{background:#8c796e;font-size:11px;padding:7px 8px;white-space:nowrap}
-.empty-message{text-align:center;padding:20px;color:#8c796e}
+.watched-check{width:19px;height:19px;accent-color:#A52C3B}
+.seat-button{background:#273544;font-size:11px;padding:7px 8px;white-space:nowrap}
+.empty-message{text-align:center;padding:20px;color:#987B78}
 
 /* MY SEATS */
 .seat-record-list{display:grid;gap:18px}
-.seat-record{padding:12px 0 16px;border-bottom:1px solid #eadfd4}
+.seat-record{padding:12px 0 16px;border-bottom:1px solid #E2D3CE}
 .seat-record:last-child{border-bottom:0}
 .seat-record-info{margin-bottom:10px}
-.seat-record-date{font-weight:bold;color:#663b43;font-size:14px}
-.seat-record-cast{font-size:12px;color:#8c796e;margin-top:4px}
-.no-seats{color:#8c796e;font-size:13px;padding:8px 2px}
-.mini-stage{margin:8px auto 12px;padding:5px;max-width:260px;text-align:center;color:white;background:#542f36;border-radius:4px;font-size:10px;letter-spacing:3px}
+.seat-record-date{font-weight:bold;color:#762D3C;font-size:14px}
+.seat-record-cast{font-size:12px;color:#987B78;margin-top:4px}
+.no-seats{color:#987B78;font-size:13px;padding:8px 2px}
+.mini-stage{margin:8px auto 12px;padding:5px;max-width:260px;text-align:center;color:white;background:#401E29;border-radius:4px;font-size:10px;letter-spacing:3px}
 .mini-seat-map{
  display:flex;
  justify-content:center;
@@ -60,22 +60,19 @@ td.cast-cell{text-align:left;line-height:1.65}
  gap:9px;
  width:100%;
 }
-
 .mini-seat-block{
- background:#f7f1e9;
+ background:#E9D6D0;
  padding:7px 5px;
  border-radius:5px;
  min-width:0;
  flex:0 0 auto;
 }
-
 .mini-seat-block h4{
  text-align:center;
  margin:0 0 6px;
- color:#663b43;
+ color:#401E29;
  font-size:10px;
 }
-
 .mini-seat-row{
  display:flex;
  align-items:center;
@@ -84,68 +81,64 @@ td.cast-cell{text-align:left;line-height:1.65}
  min-height:14px;
  margin:2px 0;
 }
-
 .mini-row-label{
  width:12px;
  flex-shrink:0;
  text-align:center;
- color:#8c796e;
+ color:#987B78;
  font-size:8px;
 }
-
 .mini-seat{
  width:11px;
  height:13px;
  min-width:11px;
  padding:0;
  margin:0;
- border:1px solid #d4c4b7;
+ border:1px solid #D4C4C0;
  border-radius:2px;
- background:#fffdf9;
- color:#663b43;
+ background:#FFF9F6;
+ color:#401E29;
  font-size:8px;
  line-height:11px;
  flex-shrink:0;
 }
-
 .mini-seat.selected{
- background:#663b43;
- border-color:#663b43;
+ background:#A52C3B;
+ border-color:#A52C3B;
  color:white;
  font-weight:bold;
 }
-
 .mini-seat-gap,.mini-pillar{
  width:11px;
  height:13px;
  flex-shrink:0;
 }
-.mini-pillar{border:1px dashed #b9a89a;border-radius:2px;background:#e6ddd3}
-.mini-legend{text-align:center;font-size:10px;color:#8c796e;margin-top:8px}
-.mini-legend-mark{display:inline-block;width:10px;height:10px;background:#663b43;border-radius:2px;vertical-align:middle;margin-right:4px}
+.mini-pillar{border:1px dashed #B9AAA5;border-radius:2px;background:#D9D5D2}
+.mini-legend{text-align:center;font-size:10px;color:#987B78;margin-top:8px}
+.mini-legend-mark{display:inline-block;width:10px;height:10px;background:#A52C3B;border-radius:2px;vertical-align:middle;margin-right:4px}
 
 /* 좌석 선택 창 */
-.seat-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,20,20,.7);padding:8px;overflow-y:auto}
+.seat-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,20,25,.72);padding:8px;overflow-y:auto}
 .seat-modal.open{display:flex;justify-content:center;align-items:flex-start}
-.seat-window{width:100%;max-width:1000px;margin:8px auto;padding:16px;background:#fffdf9;border-radius:10px}
+.seat-window{width:100%;max-width:1000px;margin:8px auto;padding:16px;background:#FFF9F6;border-radius:10px}
 .seat-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .seat-top h2{margin-bottom:5px}
-#seatPerformance{font-size:13px;color:#8c796e;margin:0}
-.stage{margin:14px auto;padding:10px;max-width:400px;text-align:center;color:white;background:#542f36;border-radius:5px;letter-spacing:4px}
+#seatPerformance{font-size:13px;color:#987B78;margin:0}
+.stage{margin:14px auto;padding:10px;max-width:400px;text-align:center;color:white;background:#401E29;border-radius:5px;letter-spacing:4px}
 .seat-legend{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:13px;font-size:12px}
-.legend-square{display:inline-block;width:15px;height:15px;border:1px solid #c9b8aa;border-radius:3px;vertical-align:middle;margin-right:4px;background:#f7f1e9}
-.legend-square.selected{background:#663b43}
+.legend-square{display:inline-block;width:15px;height:15px;border:1px solid #D4C4C0;border-radius:3px;vertical-align:middle;margin-right:4px;background:#E9D6D0}
+.legend-square.selected{background:#A52C3B}
 .seat-map{display:flex;justify-content:center;align-items:flex-start;gap:8px;width:100%}
-.seat-block{background:#f7f1e9;padding:9px 5px;border-radius:8px;min-width:0}
-.seat-block h3{text-align:center;margin:0 0 9px;color:#663b43;font-size:13px}
+.seat-block{background:#E9D6D0;padding:9px 5px;border-radius:8px;min-width:0}
+.seat-block h3{text-align:center;margin:0 0 9px;color:#401E29;font-size:13px}
 .seat-row{display:flex;align-items:center;justify-content:center;gap:2px;min-height:25px;margin:3px 0}
-.row-label{width:18px;flex-shrink:0;text-align:center;color:#8c796e;font-size:10px}
-.seat{width:22px;height:23px;min-width:22px;padding:0;margin:0;border:1px solid #d4c4b7;border-radius:4px;background:#fffdf9;color:#663b43;font-size:10px;line-height:21px;flex-shrink:0}
-.seat.selected{background:#663b43;border-color:#663b43;color:white;font-weight:bold}
+.row-label{width:18px;flex-shrink:0;text-align:center;color:#987B78;font-size:10px}
+.seat{width:22px;height:23px;min-width:22px;padding:0;margin:0;border:1px solid #D4C4C0;border-radius:4px;background:#FFF9F6;color:#401E29;font-size:10px;line-height:21px;flex-shrink:0}
+.seat.selected{background:#A52C3B;border-color:#A52C3B;color:white;font-weight:bold}
 .seat-gap,.pillar{width:22px;height:23px;flex-shrink:0}
-.pillar{border:1px dashed #b9a89a;border-radius:3px;background:#e6ddd3}
-.seat-bottom{margin-top:16px;padding-top:13px;border-top:1px solid #eadfd4}
-#selectedSeatText{color:#663b43;font-weight:bold;font-size:13px;line-height:1.8;overflow-wrap:anywhere;margin:8px 0 12px}
+.pillar{border:1px dashed #B9AAA5;border-radius:3px;background:#D9D5D2}
+.seat-bottom{margin-top:16px;padding-top:13px;border-top:1px solid #E2D3CE}
+#selectedSeatText{color:#762D3C;font-weight:bold;font-size:13px;line-height:1.8;overflow-wrap:anywhere;margin:8px 0 12px}
 .seat-bottom button{margin:3px}
 
 @media(max-width:600px){
@@ -210,21 +203,27 @@ td.cast-cell{text-align:left;line-height:1.65}
  .seat-bottom p{font-size:12px}
  #selectedSeatText{font-size:11px}
  .seat-bottom button{font-size:10px;padding:7px 9px}
+ .actor-count-list{gap:4px}
+ .actor-count-card{padding:8px 5px}
+ .actor-count-card h3{font-size:10px;margin-bottom:5px}
+ .actor-count-person{font-size:9px;padding:5px 0}
+ .actor-count-number{font-size:9px}
 }
- /* MY ACTOR COUNT */
+
+/* MY ACTOR COUNT */
 .actor-count-list{
  display:grid;
  grid-template-columns:repeat(3,minmax(0,1fr));
  gap:8px;
 }
 .actor-count-card{
- background:#f7f1e9;
+ background:#E9D6D0;
  padding:11px;
  border-radius:8px;
 }
 .actor-count-card h3{
  margin:0 0 8px;
- color:#663b43;
+ color:#401E29;
  font-size:14px;
 }
 .actor-count-person{
@@ -233,39 +232,21 @@ td.cast-cell{text-align:left;line-height:1.65}
  align-items:center;
  gap:4px;
  padding:5px 0;
- border-bottom:1px solid #eadfd4;
+ border-bottom:1px solid #E2D3CE;
  font-size:13px;
 }
-.actor-count-person:last-child{
- border-bottom:0;
-}
+.actor-count-person:last-child{border-bottom:0}
 .actor-count-number{
- color:#663b43;
+ color:#762D3C;
  font-weight:bold;
  white-space:nowrap;
 }
-
-@media(max-width:600px){
+ @media(max-width:600px){
  .actor-count-list{gap:4px}
  .actor-count-card{padding:8px 5px}
  .actor-count-card h3{font-size:10px;margin-bottom:5px}
  .actor-count-person{font-size:9px;padding:5px 0}
  .actor-count-number{font-size:9px}
-}
- @media(max-width:600px){
- .mini-seat-map{gap:4px}
- .mini-seat-block{padding:6px 3px}
- .mini-seat-block h4{font-size:9px;margin-bottom:5px}
- .mini-seat-row{gap:2px;min-height:13px;margin:2px 0}
- .mini-row-label{width:10px;font-size:7px}
- .mini-seat{
-  width:10px;
-  min-width:10px;
-  height:12px;
-  font-size:7px;
-  line-height:10px;
- }
- .mini-seat-gap,.mini-pillar{width:10px;height:12px}
 }
 </style>
 </head>
@@ -328,7 +309,7 @@ td.cast-cell{text-align:left;line-height:1.65}
   <div class="seat-legend">
    <span><span class="legend-square"></span>선택 가능</span>
    <span><span class="legend-square selected"></span>내 좌석</span>
-   <span><span class="legend-square" style="background:#e6ddd3"></span>기둥</span>
+   <span><span class="legend-square" style="background:#D9D5D2"></span>기둥</span>
   </div>
   <div class="seat-map">
    <div class="seat-block"><h3>LEFT</h3><div id="leftSeats"></div></div>
