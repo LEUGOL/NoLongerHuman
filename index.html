@@ -653,7 +653,12 @@ function seatDescription(id){
  const [block,row,local]=id.split("-");
  return `${blockName(block)} ${row}열 ${seatLayoutValue(block,Number(row),Number(local))}번`;
 }
-
+const events = [
+ {date:"2026-11-05",name:"스페셜 커튼콜"},
+ {date:"2026-11-08",name:"스페셜 커튼콜"},
+ {date:"2026-11-10",name:"관객과의 대화"}
+];
+ 
 function render(){
  const body=document.getElementById("scheduleBody");
  const filter=document.getElementById("actorFilter").value;
