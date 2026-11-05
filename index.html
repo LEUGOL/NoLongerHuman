@@ -445,7 +445,6 @@ th,td,.seat-record,.seat-bottom{border-color:#DCCBC6}
     <th>안고</th>
     <th>시즈코</th>
     <th>관극</th>
-<th>별점</th>
 <th>좌석</th>
    </tr>
   </thead>
@@ -662,11 +661,7 @@ function render(){
   shizuko.textContent=r.shizuko||"-";
 
   const watched=document.createElement("td");
-  const ratingCell=document.createElement("td");
 
-if(r.watched){
- ratingCell.appendChild(createRatingStars(r));
-}
   const check=document.createElement("input");
   check.type="checkbox";
   check.className="watched-check";
@@ -685,7 +680,7 @@ if(r.watched){
   seatButton.addEventListener("click",()=>openSeatMap(i));
   seat.appendChild(seatButton);
 
-[date,time,dazai,ango,shizuko,watched,ratingCell,seat]
+[date,time,dazai,ango,shizuko,watched,seat]
  .forEach(td=>tr.appendChild(td));
 
   body.appendChild(tr);
