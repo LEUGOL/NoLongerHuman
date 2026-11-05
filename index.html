@@ -808,6 +808,10 @@ function renderActorCounts(){
   card.appendChild(heading);
 
   cast[role.key].forEach(actor=>{
+  const total=records.filter(r=>
+    r[role.key]===actor
+   ).length;
+
    const count=records.filter(r=>
     r.watched===true && r[role.key]===actor
    ).length;
@@ -820,7 +824,7 @@ function renderActorCounts(){
 
    const number=document.createElement("span");
    number.className="actor-count-number";
-   number.textContent=count+"회";
+  number.textContent=count+"/"+total;
 
    person.append(name,number);
    card.appendChild(person);
