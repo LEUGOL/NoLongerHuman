@@ -1096,11 +1096,37 @@ function renderNotes(){
   select.appendChild(option);
  });
 
- if(notes.length===0){
+ const savedRecords=records.filter(r=>{
+  const key=ratingKey(r);
+  return notes.some(n=>n.recordKey===key) || ratings[key];
+ });
+
+ if(savedRecords.length===0){
   list.innerHTML=
    '<div class="note-empty">아직 작성한 감상 기록이 없습니다.<br>첫 번째 관극 일기를 남겨보세요.</div>';
+  return;
  }
-}
+
+ list.innerHTML="";
+
+ savedRecords.forEach(r=>{
+  const key=ratingKey(r);
+  const note=notes.find(n=>n.recordKey===key);
+  const score=ratings[key]||0;
+
+  const item=document.createElement("div");
+  item.className="note-item";
+
+  item.innerHTML=`
+   <h3>${formatDate(r.date)} ${r.time||""}</h3>
+   <p>다자이 ${r.dazai||"-"} / 안고 ${r.ango||"-"} / 시즈코 ${r.shizuko||"-"}</p>
+   <p class="note-stars">${"★".repeat(score)}${"☆".repeat(5-score)}</p>
+   ${note?.scene?`<p><strong>기억하고 싶은 장면</strong><br>${note.scene}</p>`:""}
+   ${note?.memo?`<p><strong>오늘의 감상</strong><br>${note.memo}</p>`:""}
+  `;
+
+  list.appendChild(item);
+ });
 function closeSeatMap(){
  document.getElementById("seatModal").classList.remove("open");
  currentRecordIndex=null;
