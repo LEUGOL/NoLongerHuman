@@ -16,7 +16,7 @@ h2{color:#663b43;margin:0 0 12px;font-size:18px}
 .cast-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .cast-card{background:#f7f1e9;padding:11px;border-radius:8px}
 .cast-card h3{margin:0 0 7px;color:#663b43;font-size:14px}
-.cast-card p{margin:0;line-height:1.6;font-size:13px;overflow-wrap:normal}
+.cast-card p{margin:0;line-height:1.6;font-size:13px;white-space:nowrap}
 .stats{display:flex;gap:8px}
 .stat{flex:1;background:#f7f1e9;padding:11px;border-radius:8px;font-size:12px}
 .stat strong{display:block;font-size:24px;color:#663b43;margin-bottom:2px}
@@ -24,7 +24,6 @@ h2{color:#663b43;margin:0 0 12px;font-size:18px}
 button,select{font:inherit;border:0;border-radius:6px;padding:8px 10px}
 button{background:#663b43;color:white;cursor:pointer}
 button.secondary{background:#8c796e}
-button.delete{background:#a65b56}
 .actions button{font-size:12px}
 #actorFilter{width:100%;margin-bottom:10px;border:1px solid #d9c9bb;background:#fff}
 .table-wrap{width:100%}
@@ -40,13 +39,29 @@ td.cast-cell{text-align:left;line-height:1.65}
 .watched-check{width:19px;height:19px;accent-color:#663b43}
 .seat-button{background:#8c796e;font-size:11px;padding:7px 8px;white-space:nowrap}
 .empty-message{text-align:center;padding:20px;color:#8c796e}
-.seat-record-list{display:grid;gap:7px}
-.seat-record{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px;background:#f7f1e9;border-radius:7px}
-.seat-record-info{min-width:0}
-.seat-record-date{font-weight:bold;color:#663b43;font-size:13px}
-.seat-record-cast{font-size:11px;color:#8c796e;margin-top:3px}
-.seat-record-names{font-size:12px;text-align:right;line-height:1.6;overflow-wrap:anywhere}
+
+/* MY SEATS */
+.seat-record-list{display:grid;gap:18px}
+.seat-record{padding:12px 0 16px;border-bottom:1px solid #eadfd4}
+.seat-record:last-child{border-bottom:0}
+.seat-record-info{margin-bottom:10px}
+.seat-record-date{font-weight:bold;color:#663b43;font-size:14px}
+.seat-record-cast{font-size:12px;color:#8c796e;margin-top:4px}
 .no-seats{color:#8c796e;font-size:13px;padding:8px 2px}
+.mini-stage{margin:8px auto 12px;padding:5px;max-width:260px;text-align:center;color:white;background:#542f36;border-radius:4px;font-size:10px;letter-spacing:3px}
+.mini-seat-map{display:flex;justify-content:center;align-items:flex-start;gap:5px;width:100%}
+.mini-seat-block{background:#f7f1e9;padding:6px 3px;border-radius:5px;min-width:0;flex:0 0 auto}
+.mini-seat-block h4{text-align:center;margin:0 0 5px;color:#663b43;font-size:10px}
+.mini-seat-row{display:flex;align-items:center;justify-content:center;gap:1px;min-height:12px;margin:2px 0}
+.mini-row-label{width:10px;flex-shrink:0;text-align:center;color:#8c796e;font-size:7px}
+.mini-seat{width:9px;height:11px;min-width:9px;padding:0;margin:0;border:1px solid #d4c4b7;border-radius:2px;background:#fffdf9;color:#663b43;font-size:7px;line-height:9px;flex-shrink:0}
+.mini-seat.selected{background:#663b43;border-color:#663b43;color:white;font-weight:bold}
+.mini-seat-gap,.mini-pillar{width:9px;height:11px;flex-shrink:0}
+.mini-pillar{border:1px dashed #b9a89a;border-radius:2px;background:#e6ddd3}
+.mini-legend{text-align:center;font-size:10px;color:#8c796e;margin-top:8px}
+.mini-legend-mark{display:inline-block;width:10px;height:10px;background:#663b43;border-radius:2px;vertical-align:middle;margin-right:4px}
+
+/* 좌석 선택 창 */
 .seat-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,20,20,.7);padding:8px;overflow-y:auto}
 .seat-modal.open{display:flex;justify-content:center;align-items:flex-start}
 .seat-window{width:100%;max-width:1000px;margin:8px auto;padding:16px;background:#fffdf9;border-radius:10px}
@@ -69,6 +84,7 @@ td.cast-cell{text-align:left;line-height:1.65}
 .seat-bottom{margin-top:16px;padding-top:13px;border-top:1px solid #eadfd4}
 #selectedSeatText{color:#663b43;font-weight:bold;font-size:13px;line-height:1.8;overflow-wrap:anywhere;margin:8px 0 12px}
 .seat-bottom button{margin:3px}
+
 @media(max-width:600px){
  body{padding:4px 3px}
  header{padding:16px 12px;margin-bottom:7px;border-radius:8px}
@@ -79,7 +95,7 @@ td.cast-cell{text-align:left;line-height:1.65}
  .cast-grid{gap:4px}
  .cast-card{padding:8px 5px}
  .cast-card h3{font-size:10px;margin-bottom:5px}
- .cast-card p{font-size:9px;line-height:1.6;letter-spacing:-.3px}
+ .cast-card p{font-size:9px;line-height:1.6;letter-spacing:-.4px}
  .stats{gap:5px}
  .stat{padding:8px 7px;font-size:10px}
  .stat strong{font-size:20px}
@@ -94,16 +110,23 @@ td.cast-cell{text-align:left;line-height:1.65}
  .time-main{font-size:10px}
  .watched-check{width:16px;height:16px}
  .seat-button{font-size:9px;padding:6px 5px}
- th:nth-child(1){width:19%}
- th:nth-child(2){width:12%}
- th:nth-child(3){width:36%}
- th:nth-child(4){width:8%}
- th:nth-child(5){width:16%}
- th:nth-child(6){width:9%}
- .seat-record{padding:8px;gap:7px}
- .seat-record-date{font-size:11px}
- .seat-record-cast{font-size:9px}
- .seat-record-names{font-size:10px}
+ th:nth-child(1){width:21%}
+ th:nth-child(2){width:13%}
+ th:nth-child(3){width:43%}
+ th:nth-child(4){width:10%}
+ th:nth-child(5){width:13%}
+ .seat-record{padding:10px 0 13px}
+ .seat-record-date{font-size:12px}
+ .seat-record-cast{font-size:10px}
+ .mini-seat-map{gap:2px}
+ .mini-seat-block{padding:5px 1px;border-radius:4px}
+ .mini-seat-block h4{font-size:8px;margin-bottom:4px}
+ .mini-seat-row{gap:1px;min-height:10px;margin:2px 0}
+ .mini-row-label{width:8px;font-size:6px}
+ .mini-seat{width:8px;min-width:8px;height:10px;font-size:6px;line-height:8px;border-radius:1px}
+ .mini-seat-gap,.mini-pillar{width:8px;height:10px}
+ .mini-stage{font-size:9px;margin:7px auto 9px}
+ .mini-legend{font-size:9px}
  .seat-modal{padding:3px}
  .seat-window{padding:10px 3px;margin:3px auto;border-radius:8px}
  .seat-top{padding:0 5px}
@@ -161,7 +184,7 @@ td.cast-cell{text-align:left;line-height:1.65}
  <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
  <div class="table-wrap">
   <table>
-   <thead><tr><th>날짜</th><th>시간</th><th>캐스트</th><th>관극</th><th>좌석</th><th>삭제</th></tr></thead>
+   <thead><tr><th>날짜</th><th>시간</th><th>캐스트</th><th>관극</th><th>좌석</th></tr></thead>
    <tbody id="scheduleBody"></tbody>
   </table>
  </div>
@@ -194,7 +217,6 @@ td.cast-cell{text-align:left;line-height:1.65}
    <p>선택한 좌석</p>
    <div id="selectedSeatText">선택한 좌석이 없습니다.</div>
    <button class="secondary" onclick="clearSeats()">선택 초기화</button>
-   <button onclick="saveSeats()">좌석 저장</button>
   </div>
  </div>
 </div>
@@ -209,7 +231,7 @@ const cast = {
 let records=[];
 try{
  records=JSON.parse(localStorage.getItem("nlh_records")||"[]");
- if(!Array.isArray(records)) records=[];
+ if(!Array.isArray(records))records=[];
 }catch(e){records=[];}
 
 const newSchedule=[
@@ -235,12 +257,12 @@ newSchedule.forEach(item=>{
  }
 });
 records.forEach(r=>{if(!Array.isArray(r.seatSelections))r.seatSelections=[];});
-localStorage.setItem("nlh_records",JSON.stringify(records));
 
 function save(){
  localStorage.setItem("nlh_records",JSON.stringify(records));
  updateStats();
 }
+
 function formatDate(value){
  if(!value)return "날짜 미정";
  const p=value.split("-");
@@ -248,7 +270,17 @@ function formatDate(value){
  const d=new Date(Number(p[0]),Number(p[1])-1,Number(p[2]));
  return `${Number(p[1])}.${Number(p[2])} (${["일","월","화","수","목","금","토"][d.getDay()]})`;
 }
-function blockName(block){return {left:"왼쪽",center:"가운데",right:"오른쪽"}[block];}
+
+function blockName(block){
+ return {left:"왼쪽",center:"가운데",right:"오른쪽"}[block];
+}
+
+const seatLayout={
+ left:[4,4,4,4,2,3,4,4,4,4,4,4,4,3],
+ center:[11,10,11,10,11,10,11,11,11,11,11,11,10,8],
+ right:[4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+};
+
 function seatLayoutValue(block,row,local){
  const index=row-1;
  let n=local;
@@ -256,168 +288,377 @@ function seatLayoutValue(block,row,local){
  if(block==="right")n+=seatLayout.center[index];
  return n;
 }
+
 function seatDescription(id){
  const [block,row,local]=id.split("-");
  return `${blockName(block)} ${row}열 ${seatLayoutValue(block,Number(row),Number(local))}번`;
 }
+
 function render(){
  const body=document.getElementById("scheduleBody");
  const filter=document.getElementById("actorFilter").value;
  body.innerHTML="";
  let shown=0;
+
  records.forEach((r,i)=>{
   const actors=[r.dazai,r.ango,r.shizuko];
   if(filter&&!actors.includes(filter))return;
   shown++;
+
   const tr=document.createElement("tr");
+
   const date=document.createElement("td");
   date.innerHTML=`<span class="date-main">${formatDate(r.date)}</span>`;
+
   const time=document.createElement("td");
   time.innerHTML=`<span class="time-main">${r.time||"-"}</span>`;
+
   const castCell=document.createElement("td");
   castCell.className="cast-cell";
   castCell.innerHTML=`<span><i class="cast-role">다자이</i>${r.dazai||"-"}</span><span><i class="cast-role">안고</i>${r.ango||"-"}</span><span><i class="cast-role">시즈코</i>${r.shizuko||"-"}</span>`;
+
   const watched=document.createElement("td");
   const check=document.createElement("input");
-  check.type="checkbox";check.className="watched-check";check.checked=!!r.watched;
+  check.type="checkbox";
+  check.className="watched-check";
+  check.checked=!!r.watched;
   check.setAttribute("aria-label","관극 여부");
-  check.addEventListener("change",()=>{records[i].watched=check.checked;save();});
+  check.addEventListener("change",()=>{
+   records[i].watched=check.checked;
+   save();
+  });
   watched.appendChild(check);
+
   const seat=document.createElement("td");
   const seatButton=document.createElement("button");
-  seatButton.className="seat-button";seatButton.textContent="좌석 선택";
+  seatButton.className="seat-button";
+  seatButton.textContent="좌석 선택";
   seatButton.addEventListener("click",()=>openSeatMap(i));
   seat.appendChild(seatButton);
-  const del=document.createElement("td");
-  const delButton=document.createElement("button");
-  delButton.className="delete";delButton.textContent="삭제";
-  delButton.addEventListener("click",()=>deleteRow(i));
-  del.appendChild(delButton);
-  [date,time,castCell,watched,seat,del].forEach(td=>tr.appendChild(td));
+
+  [date,time,castCell,watched,seat].forEach(td=>tr.appendChild(td));
   body.appendChild(tr);
  });
+
  if(!shown){
-  const tr=document.createElement("tr"),td=document.createElement("td");
-  td.colSpan=6;td.className="empty-message";td.textContent="표시할 공연 일정이 없습니다.";
-  tr.appendChild(td);body.appendChild(tr);
+  const tr=document.createElement("tr");
+  const td=document.createElement("td");
+  td.colSpan=5;
+  td.className="empty-message";
+  td.textContent="표시할 공연 일정이 없습니다.";
+  tr.appendChild(td);
+  body.appendChild(tr);
  }
+
  updateStats();
  renderSeatRecords();
 }
+
 function updateStats(){
  document.getElementById("totalCount").textContent=records.length;
  document.getElementById("watchedCount").textContent=records.filter(r=>r.watched).length;
 }
+
 function setupFilter(){
  const select=document.getElementById("actorFilter");
  const names=[...cast.dazai,...cast.ango,...cast.shizuko];
  select.innerHTML='<option value="">전체 배우 보기</option>'+names.map(n=>`<option value="${n}">${n}</option>`).join("");
 }
+
+/* MY SEATS 좌석표 만들기 */
+function createMiniSeat(block,row,local,selections){
+ const id=seatId(block,row,local);
+ const selected=selections.includes(id);
+ const seat=document.createElement("div");
+ seat.className="mini-seat"+(selected?" selected":"");
+ seat.textContent=selected?"✓":"";
+ seat.title=seatDescription(id);
+ return seat;
+}
+
+function createMiniPillar(){
+ const p=document.createElement("span");
+ p.className="mini-pillar";
+ return p;
+}
+
+function createMiniGap(){
+ const g=document.createElement("span");
+ g.className="mini-seat-gap";
+ return g;
+}
+
+function createMiniSeatRows(block,selections){
+ const wrapper=document.createElement("div");
+ wrapper.className="mini-seat-block";
+
+ const heading=document.createElement("h4");
+ heading.textContent=block==="left"?"LEFT":block==="center"?"CENTER":"RIGHT";
+ wrapper.appendChild(heading);
+
+ seatLayout[block].forEach((count,index)=>{
+  const rowNumber=index+1;
+  const row=document.createElement("div");
+  row.className="mini-seat-row";
+
+  const label=document.createElement("span");
+  label.className="mini-row-label";
+  label.textContent=rowNumber;
+  row.appendChild(label);
+
+  if(block==="left"&&rowNumber===5){
+   row.append(createMiniPillar(),createMiniPillar());
+  }
+  if(block==="left"&&rowNumber===6){
+   row.appendChild(createMiniPillar());
+  }
+  if(block==="center"&&rowNumber===14){
+   for(let i=0;i<4;i++)row.appendChild(createMiniGap());
+  }
+
+  for(let n=1;n<=count;n++){
+   row.appendChild(createMiniSeat(block,rowNumber,n,selections));
+  }
+
+  wrapper.appendChild(row);
+ });
+
+ return wrapper;
+}
+
 function renderSeatRecords(){
  const target=document.getElementById("seatRecordList");
  target.innerHTML="";
- const saved=records.map((r,index)=>({r,index})).filter(x=>x.r.seatSelections&&x.r.seatSelections.length);
+
+ const saved=records
+  .map((r,index)=>({r,index}))
+  .filter(x=>x.r.seatSelections&&x.r.seatSelections.length);
+
  if(!saved.length){
-  target.innerHTML='<div class="no-seats">아직 저장한 좌석이 없습니다.</div>';
+  target.innerHTML='<div class="no-seats">아직 선택한 좌석이 없습니다.</div>';
   return;
  }
+
  saved.forEach(({r})=>{
-  const item=document.createElement("div");item.className="seat-record";
-  const info=document.createElement("div");info.className="seat-record-info";
-  const date=document.createElement("div");date.className="seat-record-date";
+  const item=document.createElement("div");
+  item.className="seat-record";
+
+  const info=document.createElement("div");
+  info.className="seat-record-info";
+
+  const date=document.createElement("div");
+  date.className="seat-record-date";
   date.textContent=`${formatDate(r.date)} ${r.time||""}`;
-  const actors=document.createElement("div");actors.className="seat-record-cast";
+
+  const actors=document.createElement("div");
+  actors.className="seat-record-cast";
   actors.textContent=`${r.dazai||""} · ${r.ango||""} · ${r.shizuko||""}`;
+
   info.append(date,actors);
-  const names=document.createElement("div");names.className="seat-record-names";
-  names.textContent=r.seatSelections.map(seatDescription).join(" / ");
-  item.append(info,names);target.appendChild(item);
+
+  const stage=document.createElement("div");
+  stage.className="mini-stage";
+  stage.textContent="STAGE";
+
+  const map=document.createElement("div");
+  map.className="mini-seat-map";
+
+  map.append(
+   createMiniSeatRows("left",r.seatSelections),
+   createMiniSeatRows("center",r.seatSelections),
+   createMiniSeatRows("right",r.seatSelections)
+  );
+
+  const legend=document.createElement("div");
+  legend.className="mini-legend";
+  legend.innerHTML='<span class="mini-legend-mark"></span>내가 선택한 좌석';
+
+  item.append(info,stage,map,legend);
+  target.appendChild(item);
  });
 }
-function deleteRow(index){
- if(!confirm("이 일정을 삭제할까요?"))return;
- records.splice(index,1);save();render();
-}
-function exportData(){
- const blob=new Blob([JSON.stringify(records,null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");a.href=url;a.download="no-longer-human-records.json";a.click();
- URL.revokeObjectURL(url);
-}
-function importData(event){
- const file=event.target.files[0];if(!file)return;
- const reader=new FileReader();
- reader.onload=()=>{
-  try{
-   const data=JSON.parse(reader.result);if(!Array.isArray(data))throw new Error();
-   records=data;records.forEach(r=>{if(!Array.isArray(r.seatSelections))r.seatSelections=[];});
-   save();render();alert("기록을 불러왔습니다.");
-  }catch(e){alert("올바른 기록 파일이 아닙니다.");}
-  event.target.value="";
- };
- reader.readAsText(file);
-}
 
-/* 좌석 배치 */
-const seatLayout={
- left:[4,4,4,4,2,3,4,4,4,4,4,4,4,3],
- center:[11,10,11,10,11,10,11,11,11,11,11,11,10,8],
- right:[4,4,4,4,4,4,4,4,4,4,4,4,4,4]
-};
+/* 좌석 선택 */
 let currentRecordIndex=null;
 let temporarySeats=[];
-function seatId(block,row,local){return `${block}-${row}-${local}`;}
-function globalSeatNumber(block,row,local){return seatLayoutValue(block,row,local);}
+
+function seatId(block,row,local){
+ return `${block}-${row}-${local}`;
+}
+
+function globalSeatNumber(block,row,local){
+ return seatLayoutValue(block,row,local);
+}
+
 function makeSeat(block,row,local){
- const id=seatId(block,row,local),selected=temporarySeats.includes(id);
+ const id=seatId(block,row,local);
+ const selected=temporarySeats.includes(id);
+
  const b=document.createElement("button");
  b.className="seat"+(selected?" selected":"");
  b.textContent=selected?"✓":globalSeatNumber(block,row,local);
- b.type="button";b.title=`${row}열 ${globalSeatNumber(block,row,local)}번`;
+ b.type="button";
+ b.title=`${row}열 ${globalSeatNumber(block,row,local)}번`;
  b.addEventListener("click",()=>toggleSeat(id));
+
  return b;
 }
+
 function makeSeatRows(block,targetId){
- const target=document.getElementById(targetId);target.innerHTML="";
+ const target=document.getElementById(targetId);
+ target.innerHTML="";
+
  seatLayout[block].forEach((count,index)=>{
-  const rowNumber=index+1,row=document.createElement("div");row.className="seat-row";
-  const label=document.createElement("span");label.className="row-label";label.textContent=rowNumber;row.appendChild(label);
-  if(block==="left"&&rowNumber===5)row.append(makePillar(),makePillar());
-  if(block==="left"&&rowNumber===6)row.appendChild(makePillar());
-  if(block==="center"&&rowNumber===14)for(let i=0;i<4;i++)row.appendChild(makeGap());
-  for(let n=1;n<=count;n++)row.appendChild(makeSeat(block,rowNumber,n));
+  const rowNumber=index+1;
+  const row=document.createElement("div");
+  row.className="seat-row";
+
+  const label=document.createElement("span");
+  label.className="row-label";
+  label.textContent=rowNumber;
+  row.appendChild(label);
+
+  if(block==="left"&&rowNumber===5){
+   row.append(makePillar(),makePillar());
+  }
+  if(block==="left"&&rowNumber===6){
+   row.appendChild(makePillar());
+  }
+  if(block==="center"&&rowNumber===14){
+   for(let i=0;i<4;i++)row.appendChild(makeGap());
+  }
+
+  for(let n=1;n<=count;n++){
+   row.appendChild(makeSeat(block,rowNumber,n));
+  }
+
   target.appendChild(row);
  });
 }
-function makePillar(){const p=document.createElement("span");p.className="pillar";p.title="기둥";return p;}
-function makeGap(){const g=document.createElement("span");g.className="seat-gap";return g;}
+
+function makePillar(){
+ const p=document.createElement("span");
+ p.className="pillar";
+ p.title="기둥";
+ return p;
+}
+
+function makeGap(){
+ const g=document.createElement("span");
+ g.className="seat-gap";
+ return g;
+}
+
 function openSeatMap(index){
- currentRecordIndex=index;temporarySeats=[...(records[index].seatSelections||[])];
+ currentRecordIndex=index;
+ temporarySeats=[...(records[index].seatSelections||[])];
+
  const r=records[index];
- document.getElementById("seatPerformance").textContent=`${formatDate(r.date)} ${r.time||""}`;
+ document.getElementById("seatPerformance").textContent=
+  `${formatDate(r.date)} ${r.time||""}`;
+
  document.getElementById("seatModal").classList.add("open");
- makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");
+
+ makeSeatRows("left","leftSeats");
+ makeSeatRows("center","centerSeats");
+ makeSeatRows("right","rightSeats");
+
  updateSelectedSeatText();
 }
+
 function toggleSeat(id){
- temporarySeats=temporarySeats.includes(id)?temporarySeats.filter(x=>x!==id):[...temporarySeats,id];
- makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");
+ temporarySeats=temporarySeats.includes(id)
+  ?temporarySeats.filter(x=>x!==id)
+  :[...temporarySeats,id];
+
+ /* 누를 때마다 즉시 저장 */
+ saveCurrentSeats();
+
+ makeSeatRows("left","leftSeats");
+ makeSeatRows("center","centerSeats");
+ makeSeatRows("right","rightSeats");
+
  updateSelectedSeatText();
+ renderSeatRecords();
 }
+
+function saveCurrentSeats(){
+ if(currentRecordIndex===null)return;
+
+ records[currentRecordIndex].seatSelections=[...temporarySeats];
+ records[currentRecordIndex].seat=
+  temporarySeats.map(seatDescription).join(", ");
+
+ save();
+}
+
 function updateSelectedSeatText(){
  const target=document.getElementById("selectedSeatText");
- target.textContent=temporarySeats.length?temporarySeats.map(seatDescription).join(" / "):"선택한 좌석이 없습니다.";
+
+ target.textContent=temporarySeats.length
+  ?temporarySeats.map(seatDescription).join(" / ")
+  :"선택한 좌석이 없습니다.";
 }
+
 function clearSeats(){
- temporarySeats=[];makeSeatRows("left","leftSeats");makeSeatRows("center","centerSeats");makeSeatRows("right","rightSeats");updateSelectedSeatText();
+ temporarySeats=[];
+ saveCurrentSeats();
+
+ makeSeatRows("left","leftSeats");
+ makeSeatRows("center","centerSeats");
+ makeSeatRows("right","rightSeats");
+
+ updateSelectedSeatText();
+ renderSeatRecords();
 }
-function saveSeats(){
- if(currentRecordIndex===null)return;
- records[currentRecordIndex].seatSelections=[...temporarySeats];
- records[currentRecordIndex].seat=temporarySeats.map(seatDescription).join(", ");
- save();render();closeSeatMap();
+
+function closeSeatMap(){
+ document.getElementById("seatModal").classList.remove("open");
+ currentRecordIndex=null;
 }
-function closeSeatMap(){document.getElementById("seatModal").classList.remove("open");currentRecordIndex=null;}
+
+/* 기록 저장 및 불러오기 */
+function exportData(){
+ const blob=new Blob([JSON.stringify(records,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="no-longer-human-records.json";
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function importData(event){
+ const file=event.target.files[0];
+ if(!file)return;
+
+ const reader=new FileReader();
+
+ reader.onload=()=>{
+  try{
+   const data=JSON.parse(reader.result);
+   if(!Array.isArray(data))throw new Error();
+
+   records=data;
+   records.forEach(r=>{
+    if(!Array.isArray(r.seatSelections))r.seatSelections=[];
+   });
+
+   save();
+   render();
+   alert("기록을 불러왔습니다.");
+  }catch(e){
+   alert("올바른 기록 파일이 아닙니다.");
+  }
+
+  event.target.value="";
+ };
+
+ reader.readAsText(file);
+}
+
+/* 시작 */
+localStorage.setItem("nlh_records",JSON.stringify(records));
 setupFilter();
 render();
 </script>
