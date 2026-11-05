@@ -572,6 +572,7 @@ function render(){
 
  updateStats();
  renderSeatRecords();
+ renderNotes();
 }
 
 function updateStats(){
@@ -864,7 +865,33 @@ function clearSeats(){
  updateSelectedSeatText();
  renderSeatRecords();
 }
+/* MY NOTES 목록 불러오기 */
 
+function renderNotes(){
+ const select=document.getElementById("notePerformance");
+ const list=document.getElementById("noteList");
+
+ if(!select||!list)return;
+
+ select.innerHTML=
+  '<option value="">관극한 공연을 선택해 주세요.</option>';
+
+ records.forEach((r,index)=>{
+  if(!r.watched)return;
+
+  const option=document.createElement("option");
+  option.value=index;
+  option.textContent=
+   `${formatDate(r.date)} ${r.time||""} · ${r.dazai||""}`;
+
+  select.appendChild(option);
+ });
+
+ if(notes.length===0){
+  list.innerHTML=
+   '<div class="note-empty">아직 작성한 감상 기록이 없습니다.<br>첫 번째 관극 일기를 남겨보세요.</div>';
+ }
+}
 function closeSeatMap(){
  document.getElementById("seatModal").classList.remove("open");
  currentRecordIndex=null;
