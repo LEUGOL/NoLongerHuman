@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NO LONGER HUMAN | THEATRE LOG</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root {
+  --bg: #f3eee8;
+  --paper: #fffdf9;
+  --ink: #302a29;
+  --muted: #887b75;
+  --wine: #713c43;
+  --line: #e5dcd4;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans KR", Arial, sans-serif;
+}
+header {
+  background: #302a29;
+  color: #fffaf4;
+  padding: 38px 20px 32px;
+  text-align: center;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #c9a9a2;
+}
+h1 {
+  margin: 13px 0 8px;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 7vw, 54px);
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+.subtitle { color: #d8c9c2; font-size: 12px; letter-spacing: 2px; }
+main { max-width: 1050px; margin: 25px auto; padding: 0 16px 50px; }
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 22px;
+  margin-bottom: 18px;
+}
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  margin: 0 0 17px;
+  color: var(--wine);
+}
+input, select, button {
+  font: inherit;
+}
+input, select {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  border-radius: 3px;
+}
+button {
+  border: 0;
+  background: var(--wine);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px;
+}
+button.secondary { background: #e9e0d9; color: var(--ink); }
+button.danger { background: #eee3e0; color: #814b4b; }
+button:hover { opacity: .85; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.info-grid label, .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.info-grid input { width: 100%; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.stat {
+  background: #eee6df;
+  padding: 17px 10px;
+  text-align: center;
+}
+.stat strong {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 27px;
+  color: var(--wine);
+}
+.stat span { font-size: 11px; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+  font-size: 13px;
+}
+th {
+  background: #eee6df;
+  color: var(--wine);
+  font-weight: 600;
+}
+th, td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+td input { width: 100%; }
+td input[type="checkbox"] { width: 18px; height: 18px; }
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.filter-row select { flex: 1; min-width: 170px; }
+.note { font-size: 11px; color: var(--muted); line-height: 1.7; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  font: 12px Georgia, serif;
+  letter-spacing: 2px;
+  padding: 20px;
+}
+@media(max-width:600px) {
+  header { padding: 30px 12px; }
+  .panel { padding: 16px 12px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .stats { gap: 6px; }
+  .stat { padding: 13px 5px; }
+  .stat strong { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">A PERSONAL THEATRE ARCHIVE</div>
+  <h1>NO LONGER HUMAN</h1>
+  <div class="subtitle">인간실격 · MY THEATRE RECORD</div>
+</header>
+
+<main id="capture">
+
+  <section class="panel">
+    <h2 class="section-title">Production Information</h2>
+    <div class="info-grid">
+      <label>공연 기간
+        <input id="period" placeholder="예: 2026.11.10 - 2027.02.14">
+      </label>
+      <label>공연 장소
+        <input id="venue" placeholder="공연장 이름을 입력하세요">
+      </label>
+    </div>
+    <p class="note">공연 기간과 장소는 언제든 수정할 수 있어요.</p>
+  </section>
+
+  <section class="panel">
+    <h2 class="section-title">My Theatre Record</h2>
+    <div class="stats">
+      <div class="stat">
+        <strong id="totalCount">0</strong>
+        <span>전체 공연 회차</span>
+      </div>
+      <div class="stat">
+        <strong id="watchedCount">0</strong>
+        <span>나의 관람 회차</span>
+      </div>
+      <div class="stat">
+        <strong id="rateCount">0%</strong>
+        <span>관람 기록 비율</span>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button onclick="addRow()">＋ 공연 회차 추가</button>
+      <button class="secondary" onclick="saveJSON()">JSON 저장</button>
+      <button class="secondary" onclick="document.getElementById('fileInput').click()">JSON 불러오기</button>
+      <button class="secondary" onclick="savePNG()">PNG 저장</button>
+      <input id="fileInput" type="file" accept=".json" hidden onchange="loadJSON(event)">
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 class="section-title">Cast Schedule</h2>
+    <div class="filter-row">
+      <select id="actorFilter" onchange="render()">
+        <option value="">전체 배우 일정 보기</option>
+        <option value="안재영">다자이 오사무 · 안재영</option>
+        <option value="강정우">사카구치 안고 · 강정우</option>
+        <option value="손유동">사카구치 안고 · 손유동</option>
+        <option value="반정모">사카구치 안고 · 반정모</option>
+        <option value="한수야">오타 시즈코 · 한수야</option>
+        <option value="김주연">오타 시즈코 · 김주연</option>
+        <option value="박새힘">오타 시즈코 · 박새힘</option>
+      </select>
+      <span class="note" id="filterCount">전체 0회</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>날짜</th>
+            <th>시간</th>
+            <th>다자이 오사무</th>
+            <th>사카구치 안고</th>
+            <th>오타 시즈코</th>
+            <th>관람</th>
+            <th>좌석</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+    </div>
+    <p class="note">
+      배우와 날짜, 시간을 입력해 주세요. 관람한 회차는 체크하고 좌석을 기록하면 됩니다.
+      좌석을 모르면 비워 두어도 괜찮아요.
+    </p>
+  </section>
+
+  <section class="panel">
+    <h2 class="section-title">Cast Members</h2>
+    <div class="info-grid">
+      <label>다자이 오사무
+        <input value="안재영" readonly>
+      </label>
+      <label>사카구치 안고
+        <input value="강정우 / 손유동 / 반정모" readonly>
+      </label>
+      <label>오타 시즈코
+        <input value="한수야 / 김주연 / 박새힘" readonly>
+      </label>
+      <label>기록 제목
+        <input value="NO LONGER HUMAN" readonly>
+      </label>
+    </div>
+    <p class="note">출연 배우 구성이 달라지면 일정표에서 이름을 수정해 사용할 수 있어요.</p>
+  </section>
+
+</main>
+
+<footer>NO LONGER HUMAN · MY THEATRE LOG</footer>
+
+<script>
+let records = JSON.parse(localStorage.getItem("nlh_records") || "[]");
+
+function save() {
+  localStorage.setItem("nlh_records", JSON.stringify(records));
+  localStorage.setItem("nlh_period", document.getElementById("period").value);
+  localStorage.setItem("nlh_venue", document.getElementById("venue").value);
+  updateStats();
+}
+
+function addRow() {
+  records.push({
+    date: "",
+    time: "",
+    dazai: "안재영",
+    ango: "",
+    shizuko: "",
+    watched: false,
+    seat: ""
+  });
+  save();
+  render();
+}
+
+function updateField(index, key, value) {
+  records[index][key] = value;
+  save();
+  if (key === "watched") render();
+}
+
+function deleteRow(index) {
+  if (confirm("이 공연 회차를 삭제할까요?")) {
+    records.splice(index, 1);
+    save();
+    render();
+  }
+}
+
+function render() {
+  const body = document.getElementById("scheduleBody");
+  const filter = document.getElementById("actorFilter").value;
+  body.innerHTML = "";
+
+  let shown = records.map((r, i) => ({...r, originalIndex: i}))
+    .filter(r => !filter ||
+      [r.dazai, r.ango, r.shizuko].includes(filter));
+
+  document.getElementById("filterCount").textContent =
+    `표시 ${shown.length}회`;
+
+  shown.forEach(r => {
+    const i = r.originalIndex;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><input type="date" value="${r.date || ""}" onchange="updateField(${i},'date',this.value)"></td>
+      <td><input type="time" value="${r.time || ""}" onchange="updateField(${i},'time',this.value)"></td>
+      <td><input value="${r.dazai || ""}" onchange="updateField(${i},'dazai',this.value)"></td>
+      <td><input value="${r.ango || ""}" placeholder="배우 입력" onchange="updateField(${i},'ango',this.value)"></td>
+      <td><input value="${r.shizuko || ""}" placeholder="배우 입력" onchange="updateField(${i},'shizuko',this.value)"></td>
+      <td><input type="checkbox" ${r.watched ? "checked" : ""} onchange="updateField(${i},'watched',this.checked)"></td>
+      <td><input value="${r.seat || ""}" placeholder="예: B-3-12" onchange="updateField(${i},'seat',this.value)"></td>
+      <td><button class="danger" onclick="deleteRow(${i})">삭제</button></td>
+    `;
+    body.appendChild(tr);
+  });
+  updateStats();
+}
+
+function updateStats() {
+  const total = records.length;
+  const watched = records.filter(r => r.watched).length;
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("watchedCount").textContent = watched;
+  document.getElementById("rateCount").textContent =
+    total ? Math.round(watched / total * 100) + "%" : "0%";
+}
+
+function saveJSON() {
+  const data = {
+    period: document.getElementById("period").value,
+    venue: document.getElementById("venue").value,
+    records
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)],
+    {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "no-longer-human-record.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function loadJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      records = data.records || [];
+      document.getElementById("period").value = data.period || "";
+      document.getElementById("venue").value = data.venue || "";
+      save();
+      render();
+      alert("기록을 불러왔어요.");
+    } catch {
+      alert("파일을 읽을 수 없어요. JSON 파일인지 확인해 주세요.");
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = "";
+}
+
+function savePNG() {
+  if (typeof html2canvas === "undefined") {
+    alert("PNG 저장 기능을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.");
+    return;
+  }
+  html2canvas(document.getElementById("capture"), {
+    scale: 2,
+    backgroundColor: "#f3eee8"
+  }).then(canvas => {
+    const a = document.createElement("a");
+    a.download = "no-longer-human-record.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  });
+}
+
+document.getElementById("period").value =
+  localStorage.getItem("nlh_period") || "";
+document.getElementById("venue").value =
+  localStorage.getItem("nlh_venue") || "";
+
+document.getElementById("period").addEventListener("change", save);
+document.getElementById("venue").addEventListener("change", save);
+
+render();
+</script>
+</body>
+</html>
