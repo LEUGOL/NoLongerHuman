@@ -484,11 +484,11 @@ th,
 </section>
 <section>
  <h2>PERFORMANCE SCHEDULE</h2>
- <div class="actions">
-  <button class="secondary" onclick="exportData()">기록 저장</button>
+<div class="actions">
   <button class="secondary" onclick="document.getElementById('importFile').click()">기록 불러오기</button>
   <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
- </div>
+  <button class="secondary" onclick="exportData()">기록 저장</button>
+</div>
  <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
  <div class="table-wrap">
  <div class="schedule-scroll">
@@ -1247,9 +1247,10 @@ function closeSeatMap(){
 
 function exportData(){
  const payload={
-  version:2,
+  version:3,
   records:records,
-  notes:notes
+  notes:notes,
+  ratings:JSON.parse(localStorage.getItem("nlh_ratings") || "{}")
  };
 
  const blob=new Blob(
@@ -1264,7 +1265,6 @@ function exportData(){
  a.click();
  URL.revokeObjectURL(url);
 }
-
 function importData(event){
  const file=event.target.files[0];
  if(!file)return;
