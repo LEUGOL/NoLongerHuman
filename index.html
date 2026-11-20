@@ -484,11 +484,7 @@ th,
 </section>
 <section>
  <h2>PERFORMANCE SCHEDULE</h2>
-<div class="actions">
-  <button class="secondary" onclick="document.getElementById('importFile').click()">기록 불러오기</button>
-  <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
-  <button class="secondary" onclick="exportData()">기록 저장</button>
-</div>
+
  <select id="actorFilter" onchange="render()"><option value="">전체 배우 보기</option></select>
  <div class="table-wrap">
  <div class="schedule-scroll">
@@ -1312,5 +1308,10 @@ localStorage.setItem("nlh_records",JSON.stringify(records));
 setupFilter();
 render();
 </script>
+ <div class="actions">
+  <button class="secondary" onclick="document.getElementById('importFile').click()">기록 불러오기</button>
+  <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
+  <button class="secondary" onclick="exportData()">기록 저장</button>
+</div>
 </body>
 </html>
